@@ -18,6 +18,7 @@
 		D3108895134F5EBF0021CA53 /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3108893134F5EBB0021CA53 /* Point.cpp */; };
 		D3108898134F5F1F0021CA53 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3108896134F5F1B0021CA53 /* Edge.cpp */; };
 		D310889B13509CC30021CA53 /* ThetaSpanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D310889913509CBE0021CA53 /* ThetaSpanner.cpp */; };
+		D360E7DF15FCE87D008220BB /* GeneticSpanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D360E7DD15FCE87D008220BB /* GeneticSpanner.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +56,8 @@
 		D310889913509CBE0021CA53 /* ThetaSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThetaSpanner.cpp; sourceTree = "<group>"; };
 		D310889A13509CC00021CA53 /* ThetaSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThetaSpanner.h; sourceTree = "<group>"; };
 		D360E7DC15FCE043008220BB /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = data.txt; path = "../../../Library/Developer/Xcode/DerivedData/Spanner-emhmrzwztndalmebkonuyegfhbpa/Build/Products/Debug/data.txt"; sourceTree = "<group>"; };
+		D360E7DD15FCE87D008220BB /* GeneticSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeneticSpanner.cpp; sourceTree = "<group>"; };
+		D360E7DE15FCE87D008220BB /* GeneticSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneticSpanner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				D307DE371385A69B0035CD94 /* QuadTreeNode.h */,
 				D307DE391386F1640035CD94 /* WSPDSpanner.cpp */,
 				D307DE3A1386F1640035CD94 /* WSPDSpanner.h */,
+				D360E7DD15FCE87D008220BB /* GeneticSpanner.cpp */,
+				D360E7DE15FCE87D008220BB /* GeneticSpanner.h */,
 			);
 			path = Spanner;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 				D310889B13509CC30021CA53 /* ThetaSpanner.cpp in Sources */,
 				D307DE381385A69B0035CD94 /* QuadTreeNode.cpp in Sources */,
 				D307DE3B1386F1640035CD94 /* WSPDSpanner.cpp in Sources */,
+				D360E7DF15FCE87D008220BB /* GeneticSpanner.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

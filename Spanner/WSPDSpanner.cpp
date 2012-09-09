@@ -11,7 +11,6 @@
 
 WSPDSpanner::WSPDSpanner(std::vector<Point *> points, double t, double x, double y) : Spanner(points, t), s(4*((t+1)/(t-1))), smallest(INT_MAX), width(x) {
     QuadTreeNode root(points, x/2, y/2, x, y);
-	std::cout << x << " " << y << std::endl;
     this->connectPairs(root, root, t);
 }
 

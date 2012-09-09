@@ -22,6 +22,7 @@
 #include "ThetaSpanner.h"
 #include "TestSpanner.h"
 #include "WSPDSpanner.h"
+#include "GeneticSpanner.h"
 #include "Point.h"
 #include "Edge.h"
 
@@ -50,8 +51,8 @@ Spanner * spanner;
 void clear() {
     for(unsigned int x = 0; x < spanner->getEdges().size(); x++) {
         if(spanner->getEdges().at(x) != NULL) {
-            spanner->getEdges().at(x) = NULL;
             delete spanner->getEdges().at(x);
+			spanner->getEdges().at(x) = NULL;
         }
     }
     
@@ -150,7 +151,7 @@ static void draw() {
 void resetSpanner() {
 	ReadData();
 	
-	//delete spanner;
+	delete spanner;
     
     switch (lastspanner) {
         case 0:
@@ -164,7 +165,9 @@ void resetSpanner() {
             break;
         case 3:
             spanner = new WSPDSpanner(points, t, xmax, ymax);
-            break;   
+            break;
+		case 4:
+			spanner = new GeneticSpanner(points, t, 20, xmax, ymax);
         default:
             break;
     }
@@ -340,7 +343,14 @@ static void key_func(unsigned char key, int x, int y) {
             resetSpanner();
             cout << "Spanner: WSPD Spanner" << std::endl;
             printMetrics();
-			cout << spanner->getDepth() << endl;
+			cout << "Depth: " << spanner->getDepth() << endl;
+            break;
+		case '5':
+            lastspanner = 4;
+            clear();
+            resetSpanner();
+            cout << "Spanner: Genetic Spanner" << std::endl;
+            printMetrics();
             break;
         case 'r':
         case 'R':
