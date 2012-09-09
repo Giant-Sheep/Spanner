@@ -1,0 +1,261 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D307DE381385A69B0035CD94 /* QuadTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D307DE361385A69B0035CD94 /* QuadTreeNode.cpp */; };
+		D307DE3B1386F1640035CD94 /* WSPDSpanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D307DE391386F1640035CD94 /* WSPDSpanner.cpp */; };
+		D31088551349B7E10021CA53 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D31088541349B7E10021CA53 /* main.cpp */; };
+		D310885E1349B82C0021CA53 /* Spanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D310885C1349B82C0021CA53 /* Spanner.cpp */; };
+		D31088611349BBF40021CA53 /* GreedySpanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D310885F1349BBF40021CA53 /* GreedySpanner.cpp */; };
+		D3108888134F4F5C0021CA53 /* TestSpanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3108886134F4F5B0021CA53 /* TestSpanner.cpp */; };
+		D3108890134F55E80021CA53 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D310888F134F55E80021CA53 /* GLUT.framework */; };
+		D3108892134F55F50021CA53 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3108891134F55F50021CA53 /* OpenGL.framework */; };
+		D3108895134F5EBF0021CA53 /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3108893134F5EBB0021CA53 /* Point.cpp */; };
+		D3108898134F5F1F0021CA53 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3108896134F5F1B0021CA53 /* Edge.cpp */; };
+		D310889B13509CC30021CA53 /* ThetaSpanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D310889913509CBE0021CA53 /* ThetaSpanner.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D310884E1349B7E00021CA53 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D307DE361385A69B0035CD94 /* QuadTreeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadTreeNode.cpp; sourceTree = "<group>"; };
+		D307DE371385A69B0035CD94 /* QuadTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadTreeNode.h; sourceTree = "<group>"; };
+		D307DE391386F1640035CD94 /* WSPDSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WSPDSpanner.cpp; sourceTree = "<group>"; };
+		D307DE3A1386F1640035CD94 /* WSPDSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPDSpanner.h; sourceTree = "<group>"; };
+		D31088501349B7E10021CA53 /* Spanner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Spanner; sourceTree = BUILT_PRODUCTS_DIR; };
+		D31088541349B7E10021CA53 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D31088561349B7E10021CA53 /* Spanner.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Spanner.1; sourceTree = "<group>"; };
+		D310885C1349B82C0021CA53 /* Spanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spanner.cpp; sourceTree = "<group>"; };
+		D310885D1349B82C0021CA53 /* Spanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spanner.h; sourceTree = "<group>"; };
+		D310885F1349BBF40021CA53 /* GreedySpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GreedySpanner.cpp; sourceTree = "<group>"; };
+		D31088601349BBF40021CA53 /* GreedySpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreedySpanner.h; sourceTree = "<group>"; };
+		D3108886134F4F5B0021CA53 /* TestSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSpanner.cpp; sourceTree = "<group>"; };
+		D3108887134F4F5B0021CA53 /* TestSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSpanner.h; sourceTree = "<group>"; };
+		D310888F134F55E80021CA53 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		D3108891134F55F50021CA53 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		D3108893134F5EBB0021CA53 /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point.cpp; sourceTree = "<group>"; };
+		D3108894134F5EBD0021CA53 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		D3108896134F5F1B0021CA53 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Edge.cpp; sourceTree = "<group>"; };
+		D3108897134F5F1D0021CA53 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
+		D310889913509CBE0021CA53 /* ThetaSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThetaSpanner.cpp; sourceTree = "<group>"; };
+		D310889A13509CC00021CA53 /* ThetaSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThetaSpanner.h; sourceTree = "<group>"; };
+		D360E7DC15FCE043008220BB /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = data.txt; path = "../../../Library/Developer/Xcode/DerivedData/Spanner-emhmrzwztndalmebkonuyegfhbpa/Build/Products/Debug/data.txt"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D310884D1349B7E00021CA53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3108892134F55F50021CA53 /* OpenGL.framework in Frameworks */,
+				D3108890134F55E80021CA53 /* GLUT.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D31088451349B7E00021CA53 = {
+			isa = PBXGroup;
+			children = (
+				D3108891134F55F50021CA53 /* OpenGL.framework */,
+				D310888F134F55E80021CA53 /* GLUT.framework */,
+				D31088531349B7E10021CA53 /* Spanner */,
+				D31088511349B7E10021CA53 /* Products */,
+				D360E7DC15FCE043008220BB /* data.txt */,
+			);
+			sourceTree = "<group>";
+		};
+		D31088511349B7E10021CA53 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D31088501349B7E10021CA53 /* Spanner */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D31088531349B7E10021CA53 /* Spanner */ = {
+			isa = PBXGroup;
+			children = (
+				D310889913509CBE0021CA53 /* ThetaSpanner.cpp */,
+				D310889A13509CC00021CA53 /* ThetaSpanner.h */,
+				D31088541349B7E10021CA53 /* main.cpp */,
+				D31088561349B7E10021CA53 /* Spanner.1 */,
+				D310885C1349B82C0021CA53 /* Spanner.cpp */,
+				D310885D1349B82C0021CA53 /* Spanner.h */,
+				D310885F1349BBF40021CA53 /* GreedySpanner.cpp */,
+				D31088601349BBF40021CA53 /* GreedySpanner.h */,
+				D3108886134F4F5B0021CA53 /* TestSpanner.cpp */,
+				D3108887134F4F5B0021CA53 /* TestSpanner.h */,
+				D3108893134F5EBB0021CA53 /* Point.cpp */,
+				D3108894134F5EBD0021CA53 /* Point.h */,
+				D3108896134F5F1B0021CA53 /* Edge.cpp */,
+				D3108897134F5F1D0021CA53 /* Edge.h */,
+				D307DE361385A69B0035CD94 /* QuadTreeNode.cpp */,
+				D307DE371385A69B0035CD94 /* QuadTreeNode.h */,
+				D307DE391386F1640035CD94 /* WSPDSpanner.cpp */,
+				D307DE3A1386F1640035CD94 /* WSPDSpanner.h */,
+			);
+			path = Spanner;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D310884F1349B7E00021CA53 /* Spanner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D31088591349B7E10021CA53 /* Build configuration list for PBXNativeTarget "Spanner" */;
+			buildPhases = (
+				D310884C1349B7E00021CA53 /* Sources */,
+				D310884D1349B7E00021CA53 /* Frameworks */,
+				D310884E1349B7E00021CA53 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Spanner;
+			productName = Spanner;
+			productReference = D31088501349B7E10021CA53 /* Spanner */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D31088471349B7E00021CA53 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Aalto Yliopisto";
+			};
+			buildConfigurationList = D310884A1349B7E00021CA53 /* Build configuration list for PBXProject "Spanner" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D31088451349B7E00021CA53;
+			productRefGroup = D31088511349B7E10021CA53 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D310884F1349B7E00021CA53 /* Spanner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D310884C1349B7E00021CA53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D31088551349B7E10021CA53 /* main.cpp in Sources */,
+				D310885E1349B82C0021CA53 /* Spanner.cpp in Sources */,
+				D31088611349BBF40021CA53 /* GreedySpanner.cpp in Sources */,
+				D3108888134F4F5C0021CA53 /* TestSpanner.cpp in Sources */,
+				D3108895134F5EBF0021CA53 /* Point.cpp in Sources */,
+				D3108898134F5F1F0021CA53 /* Edge.cpp in Sources */,
+				D310889B13509CC30021CA53 /* ThetaSpanner.cpp in Sources */,
+				D307DE381385A69B0035CD94 /* QuadTreeNode.cpp in Sources */,
+				D307DE3B1386F1640035CD94 /* WSPDSpanner.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D31088571349B7E10021CA53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D31088581349B7E10021CA53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D310885A1349B7E10021CA53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D310885B1349B7E10021CA53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D310884A1349B7E00021CA53 /* Build configuration list for PBXProject "Spanner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D31088571349B7E10021CA53 /* Debug */,
+				D31088581349B7E10021CA53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D31088591349B7E10021CA53 /* Build configuration list for PBXNativeTarget "Spanner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D310885A1349B7E10021CA53 /* Debug */,
+				D310885B1349B7E10021CA53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D31088471349B7E00021CA53 /* Project object */;
+}
