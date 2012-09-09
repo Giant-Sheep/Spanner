@@ -1,0 +1,19 @@
+\relax 
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}The algorithms}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}WSPD-based}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Greedy spanner}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Theta spanner}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Experimental setup}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results and discussion}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Data challenge}{5}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Spanner Quality Measures}{6}}
+\@writefile{toc}{\contentsline {paragraph}{Greedy spanner}{6}}
+\@writefile{toc}{\contentsline {paragraph}{Theta spanner}{7}}
+\@writefile{toc}{\contentsline {paragraph}{WSPD-based spanner}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Running times}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Greedy spanner}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}WSPD based spanner}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Theta spanner}{9}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.4}Comparison}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Gheta spanners}{10}}

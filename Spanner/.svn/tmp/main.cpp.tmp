@@ -1,0 +1,225 @@
+//
+//  main.cpp
+//  Spanner
+//
+//  Created by Matias Piispanen on 4/4/11.
+//  Copyright 2011 TU/e. All rights reserved.
+//
+#include <iostream>
+#include <cstdio>
+#include <fstream>
+#include <ctime>
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include "ThetaSpanner.h"
+#include "GreedySpanner.h"
+#include "ThetaSpanner.h"
+#include "TestSpanner.h"
+#include "Point.h"
+#include "Edge.h"
+
+int win_x = 640;
+int win_y = 480;
+
+int xmax=0;
+int ymax=0;
+
+TestSpanner * testspanner;
+ThetaSpanner * thetaspanner;
+
+//Point * one = new Point(100,300);
+//Point * two = new Point(100,400);
+//Point * three = new Point(200,55);
+//Point * four = new Point(250,100);
+//Point * five = new Point(400,250);
+//Point * six = new Point(15,350);
+//Point * seven = new Point(200,220);
+//Point * eight = new Point(125,155);
+//Point * nine = new Point(20,10);
+//Point * ten = new Point(420,380);
+
+std::vector<Point *> points;
+std::vector<Point> ActualPoints;
+
+double t=10.0;
+
+Spanner * spanner;
+
+static void GenerateData(unsigned int NrOfPoints, int maxt, int max) {
+	int x,y,a,b;
+	pair<int,int> integers;
+	std::vector<pair<int, int> > v;
+	v.reserve(NrOfPoints);
+	bool ok;
+
+	srand(time(0));
+
+	b=rand()/maxt;
+	a=(int)(((double)rand()*(double)(maxt-1)*(double)b/(double)RAND_MAX)+b);
+
+	while (v.size()<NrOfPoints) {
+		x=rand()%max;
+		y=rand()%max;
+		ok=true;
+		for (unsigned int i=0; i<v.size(); i++) {
+			if(x==v[i].first && y==v[i].second) {ok=false;}
+		}
+		if (ok) {
+			v.push_back(make_pair(x,y));
+		}
+	}
+	ofstream datafile;
+	datafile.open ("data.txt");
+	datafile << "" << v.size() << "\n";
+	datafile << "" << a << " " << b << "\n";
+	for (unsigned int i=0; i<v.size(); i++) {
+		datafile << "" << v[i].first << " " << v[i].second << "\n";
+	}
+	datafile.close();
+}
+
+static void ReadData() {
+	int n,a,b,x,y;
+	std::ifstream in("data.txt");
+	if(in){
+		in >> n;
+		std::cout << "Number of points is " << n << ".\n";
+		in >> a;
+		in >> b;
+		t=(double)a/(double)b;
+		std::cout << "Maximum dilation is " << t << ".\n";
+		points.reserve(n);
+		ActualPoints.reserve(n);
+		Point p(0,0);
+		Point * PointerToPoint = new Point(0,0);
+		for (int i = 0; i<n; i++) {
+			in >> x;
+			if (x*1.1>xmax) {xmax=x*1.1;}
+			in >> y;
+			if (y*1.1>ymax) {ymax=y*1.1;}
+			p = Point(x,y);
+			ActualPoints.push_back(p);
+		}
+		for (int i = 0; i<n; i++) {
+			PointerToPoint=&ActualPoints[i];
+			points.push_back(PointerToPoint);
+		}
+	}
+}
+
+static void draw() {
+<<<<<<< .mine
+    points.push_back(one);
+    points.push_back(two);
+    points.push_back(three);
+    points.push_back(four);
+    points.push_back(five);
+    points.push_back(six);
+    points.push_back(seven);
+    points.push_back(eight);
+    points.push_back(nine);
+    points.push_back(ten);
+    
+    testspanner = new TestSpanner(points, 1.5);
+    thetaspanner = new ThetaSpanner(points, 1.00001);
+=======
+    //points.push_back(one);
+    //points.push_back(two);
+    //points.push_back(three);
+    //points.push_back(four);
+    //points.push_back(five);
+    //points.push_back(six);
+    //points.push_back(seven);
+    //points.push_back(eight);
+    //points.push_back(nine);
+    //points.push_back(ten);
+
+	//std::cout << "These are the points:\n";
+	//for (unsigned int i = 0; i<points.size(); i++) {
+	//	std::cout << "(" << points[i]->getX() << "," << points[i]->getY() << ")\n";
+	//}
+
+    testspanner = new TestSpanner(points, t);
+    thetaspanner = new ThetaSpanner(points, t);
+>>>>>>> .r14
+    spanner = thetaspanner;
+    
+    for(unsigned int x = 0; x < spanner->getEdges().size(); x++) {
+        spanner->getEdges().at(x)->draw();
+    }
+    
+    cout << "Size: " << spanner->getSize() << std::endl; 
+    cout << "Weight: " << spanner->getWeight() << std::endl;
+    cout << "Max Degree: " << spanner->getMaxDegree() << std::endl;
+    
+    glutSwapBuffers();
+}
+
+static void update() {
+}
+
+void clear() {
+    for(unsigned int x = 0; x < spanner->getEdges().size(); x++) {
+        delete spanner->getEdges().at(x);
+    }
+    
+    /*for(std::vector<Point *>::iterator i = points.begin(); i != points.end(); i++) {
+        delete (*i);
+    }*/
+
+    delete testspanner;
+    delete thetaspanner;
+}
+
+static void initGraphics() {
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+    glutInitWindowSize(xmax, ymax);
+    glutCreateWindow("Spanners");
+    
+    glViewport ( 0, 0, xmax, ymax );
+	glMatrixMode ( GL_PROJECTION );
+	glLoadIdentity ();
+	gluOrtho2D ( 0.0f, xmax, 0.0f, xmax );
+	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+	glClear ( GL_COLOR_BUFFER_BIT );
+}
+
+static void key_func(unsigned char key, int x, int y) {
+    switch (key) {
+        case 'q':
+        case 'Q':
+            clear();
+            exit(0);
+            break;
+            
+        default:
+            break;
+    }
+}
+
+int main (int argc, char** argv)
+{
+	GenerateData(15, 2, 500);
+
+	ReadData();
+
+    glutInit(&argc, argv);
+    
+    initGraphics();
+    
+    glutDisplayFunc(&draw);
+    glutIdleFunc(&update);
+    glutKeyboardFunc(&key_func);
+
+	glutMainLoop();  
+    
+    return 0;
+}
+
+
+
