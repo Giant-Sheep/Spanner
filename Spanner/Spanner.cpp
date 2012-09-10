@@ -321,6 +321,27 @@ void Spanner::addEdge(Edge* edge) {
     }
 }
 
+bool Spanner::hasEdge(Point *first, Point *second) {
+	bool found = false;
+	
+	for(vector<Edge *>::iterator it = edges.begin(); it != edges.end(); it++) {
+		if((*it)->getFirst() == first) {
+			if((*it)->getSecond() == second) {
+				found = true;
+				break;
+			}
+		}
+		else if((*it)->getSecond() == first) {
+			if((*it)->getFirst() == second) {
+				found = true;
+				break;
+			}
+		}
+	}
+	
+	return found;
+}
+
 vector<vector<double> > Spanner::getAdjacency() {
 	std::vector<std::vector<double> > adjacency(points.size(), std::vector<double>(points.size(), -1));
 	return adjacency;

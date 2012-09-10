@@ -33,6 +33,7 @@ public:
     vector<Point *> getPoints();
     vector<Edge *> getEdges();
     void addEdge(Edge* edge);
+	bool hasEdge(Point * first, Point * second);
 	virtual vector<vector<double> > getAdjacency();
 	virtual int getDepth();
     

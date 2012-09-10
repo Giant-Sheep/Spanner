@@ -18,12 +18,15 @@
 
 class GeneticSpanner : public Spanner {
 public:
-	GeneticSpanner(vector<Point *> points, double t, size_t generation_size, double x, double y);
+	GeneticSpanner(vector<Point *> points, double t, size_t generation_size, size_t mating_pool_size, double x, double y);
 	map<Spanner *, float> computeFitnesses(vector<Spanner> spanners);
+	float sumOfFitnesses(map<Spanner *, float> fitnesses);
+	vector<Spanner *> generateMatingPool(map<Spanner *, float> fitnesses, float sum, size_t size);
 	
 private:
 	vector<Spanner> population;
 	vector<vector<Point *> > population_points;
+	vector<Spanner *> mating_pool;
 };
 
 #endif /* defined(__Spanner__GeneticSpanner__) */
