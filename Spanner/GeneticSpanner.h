@@ -22,6 +22,7 @@ public:
 	map<Spanner *, float> computeFitnesses(vector<Spanner> spanners);
 	float sumOfFitnesses(map<Spanner *, float> fitnesses);
 	vector<Spanner *> generateMatingPool(map<Spanner *, float> fitnesses, float sum, size_t size);
+	vector<pair<Spanner *, Spanner *> > pairParents(vector<Spanner *> mating_pool); //työn alla
 	
 private:
 	vector<Spanner> population;
