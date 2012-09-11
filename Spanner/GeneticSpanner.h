@@ -19,16 +19,18 @@
 class GeneticSpanner : public Spanner {
 public:
 	GeneticSpanner(vector<Point *> points, double t, size_t generation_size, size_t mating_pool_size, double x, double y);
+	~GeneticSpanner();
 	map<Spanner *, float> computeFitnesses(vector<Spanner> spanners);
 	float sumOfFitnesses(map<Spanner *, float> fitnesses);
 	vector<Spanner *> generateMatingPool(map<Spanner *, float> fitnesses, float sum, size_t size);
 	vector<pair<Spanner *, Spanner *> > pairParents(vector<Spanner *> mating_pool);
-	map<Spanner *, string> generateStringRepresentation(vector<pair<Spanner *, Spanner *> > pairs); //työn alla, samalla removeEdges Spanneriin
+	multimap<Spanner *, string> generateStringRepresentation(vector<pair<Spanner *, Spanner *> > pairs); // doesn't work
 	
 private:
 	vector<Spanner> population;
 	vector<vector<Point *> > population_points;
 	vector<Spanner *> mating_pool;
+	size_t generation_size;
 };
 
 #endif /* defined(__Spanner__GeneticSpanner__) */

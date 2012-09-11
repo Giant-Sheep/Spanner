@@ -324,7 +324,7 @@ void Spanner::addEdge(Edge* edge) {
 bool Spanner::hasEdge(Point *first, Point *second) {
 	bool found = false;
 	
-	for(vector<Edge *>::iterator it = edges.begin(); it != edges.end(); it++) {
+	for(vector<Edge *>::iterator it = this->edges.begin(); it != this->edges.end(); it++) {
 		if((*it)->getFirst() == first) {
 			if((*it)->getSecond() == second) {
 				found = true;

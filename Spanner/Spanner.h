@@ -32,7 +32,7 @@ public:
     size_t getMaxDegree();
     vector<Point *> getPoints();
     vector<Edge *> getEdges();
-	void removeEdges(); //työn alla
+	void removeEdges(); // TODO
     void addEdge(Edge* edge);
 	bool hasEdge(Point * first, Point * second);
 	virtual vector<vector<double> > getAdjacency();

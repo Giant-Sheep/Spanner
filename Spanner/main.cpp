@@ -167,7 +167,7 @@ void resetSpanner() {
             spanner = new WSPDSpanner(points, t, xmax, ymax);
             break;
 		case 4:
-			spanner = new GeneticSpanner(points, t, 20, 5, xmax, ymax);
+			spanner = new GeneticSpanner(points, t, 10, 4, xmax, ymax);
         default:
             break;
     }
