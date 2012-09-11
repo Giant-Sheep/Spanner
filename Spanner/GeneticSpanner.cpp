@@ -14,6 +14,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	population_points = vector<vector<Point *> >();
 	population = vector<Spanner>();
 	map<Spanner *, float> fitnesses;
+	vector<pair<Spanner *, Spanner *> > parents;
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
 	
@@ -29,6 +30,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	fitnesses = computeFitnesses(population);
 	sum = sumOfFitnesses(fitnesses);
 	mating_pool = generateMatingPool(fitnesses, sum, mating_pool_size);
+	parents = pairParents(mating_pool);
+	cout << parents.size();
 }
 
 map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner> spanners) {
@@ -102,4 +105,21 @@ vector<Spanner *> GeneticSpanner::generateMatingPool(map<Spanner *, float> fitne
 	}
 	
 	return mating_pool;
+}
+
+vector<pair<Spanner *, Spanner *> > GeneticSpanner::pairParents(vector<Spanner *> mating_pool) {
+	vector<pair<Spanner *, Spanner *> > pairs;
+	int lottery = 0;
+	while (mating_pool.size() >= 2) {
+		lottery = mating_pool.size() * rand() / (RAND_MAX);
+		Spanner *temp_spanner = mating_pool.at(lottery);
+		mating_pool.erase(mating_pool.begin() + lottery);
+		
+		lottery = mating_pool.size() * rand() / (RAND_MAX);
+		pairs.push_back(pair<Spanner *, Spanner *>(temp_spanner, mating_pool.at(lottery)));
+		mating_pool.erase(mating_pool.begin() + lottery);
+	}
+	// Odd parent in mating_pool gets discarded
+	
+	return pairs;
 }
