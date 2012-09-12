@@ -358,6 +358,25 @@ bool Spanner::hasEdge(Point *first, Point *second) {
 	return found;
 }
 
+void Spanner::buildSpanner(string s) {
+	int row_len = points.size()-1;
+	int loc = 0;
+	int row = 0;
+	
+
+	while (row_len > 0 && row < points.size()) {
+		for (int col = 0; col < row_len; col++) {
+			if (s.compare(loc, 1, "1") == 0) {
+				this->addEdge(new Edge(points.at(col+row), points.at(row)));
+				cout << col << " " << row << endl;
+			}
+			loc++;
+		}
+		row_len--;
+		row++;
+	}
+}
+
 vector<vector<double> > Spanner::getAdjacency() {
 	std::vector<std::vector<double> > adjacency(points.size(), std::vector<double>(points.size(), -1));
 	return adjacency;

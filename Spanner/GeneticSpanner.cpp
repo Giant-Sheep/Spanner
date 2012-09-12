@@ -30,11 +30,49 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
 	}
 	
-	fitnesses = computeFitnesses(population);
-	sum = sumOfFitnesses(fitnesses);
-	mating_pool = generateMatingPool(fitnesses, sum, mating_pool_size);
-	parents = pairParents(mating_pool);
-	parent_strings = generateStringRepresentation(parents);
+	// Test GA
+	for (int i = 0; i < 10; i++) {
+		fitnesses = computeFitnesses(population);
+		sum = sumOfFitnesses(fitnesses);
+		mating_pool = generateMatingPool(fitnesses, sum, mating_pool_size);
+		parents = pairParents(mating_pool);
+		parent_strings = generateStringRepresentation(parents);
+		for (multimap<Spanner *, string>::iterator it = parent_strings.begin(); it != parent_strings.end(); it++) {
+			pair<Spanner*, string> mom = pair<Spanner *, string>((*it).first, (*it).second);
+			it++;
+			pair<Spanner*, string> dad = pair<Spanner *, string>((*it).first, (*it).second);
+			GeneticSpanner::crossover(mom.second, dad.second);
+			GeneticSpanner::mutation(0.1, mom.second);
+			GeneticSpanner::mutation(0.1, dad.second);
+			
+			cout << "Before size: " << mom.first->getEdges().size() << endl;
+			mom.first->removeEdges();
+			dad.first->removeEdges();
+			
+			mom.first->buildSpanner(mom.second);
+			dad.first->buildSpanner(dad.second);
+			
+			cout << "After size: " << mom.first->getEdges().size() << endl;
+			
+			double min = INT_MAX;
+			for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
+				double dil = (*it)->getMaxDilation();
+				if(dil < min) {
+					min = dil;
+				}
+			}
+			
+			cout << "Dilation: " << min << endl;
+		}
+	}
+	double min = INT_MAX;
+	for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
+		double dil = (*it)->getMaxDilation();
+		if(dil < min) {
+			min = dil;
+		}
+	}
+	cout << "Final Dilation: " << min << endl;
 }
 
 map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanners) {
@@ -147,9 +185,9 @@ multimap<Spanner *, string> GeneticSpanner::generateStringRepresentation(vector<
 				}
 			}
 		}
-		cout << string_representation << endl;
 		
-		point_list.clear();
+		strings.insert(pair<Spanner *, string>((*it).first, string_representation));
+		
 		point_list = (*it).second->getPoints();
 		string_representation = "";
 		for (vector<Point *>::const_iterator first_point = point_list.begin(); first_point != point_list.end(); first_point++) {
@@ -162,8 +200,10 @@ multimap<Spanner *, string> GeneticSpanner::generateStringRepresentation(vector<
 				}
 			}
 		}
-		cout << string_representation << endl;
+		
+		strings.insert(pair<Spanner *, string>((*it).second, string_representation));
 	}
+	
 	
 	return strings;
 }
@@ -183,7 +223,7 @@ void initial_string_generator(double prob_for_1, string &s) {
 }
 
 
-bool GeneticSpanner::mutation(double probability, string &s) {
+ bool GeneticSpanner::mutation(double probability, string &s) {
 
 	int r = rand() % 10000;
 	double r2=r/10000.0;
@@ -199,7 +239,7 @@ bool GeneticSpanner::mutation(double probability, string &s) {
 			s[mutation_point] = '1';
 		}
 
-		if(DEBUG) {cout << "m: " << s << " prob: " << r2 << " point: " << mutation_point << endl;}
+		//if(DEBUG) {cout << "m: " << s << " prob: " << r2 << " point: " << mutation_point << endl;}
 
 		return true;
 	}
@@ -211,7 +251,7 @@ void GeneticSpanner::crossover(string &a, string &b) {
 
 	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
 
-	if(DEBUG) {cout << "crossover_point: " << crossover_point << endl;}
+	//if(DEBUG) {cout << "crossover_point: " << crossover_point << endl;}
 
 	string a2 (a, 0, crossover_point);
 	a2.append(b, crossover_point, b.length()-crossover_point);
@@ -220,16 +260,4 @@ void GeneticSpanner::crossover(string &a, string &b) {
 
 	a=a2;
 	b=b2;
-}
-
-void GeneticSpanner::buildSpanner(Spanner *spanner, string string) {
-	size_t len = spanner->getPoints().size();
-	int row = 0;
-	vector<Point *> points = spanner->getPoints();
-	
-	while (len > 0) {
-		for (int col = 0; col < len; col++) {
-			spanner->addEdge(new Edge(points.at(col), points.at(row)));
-		}
-	}
 }

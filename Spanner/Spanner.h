@@ -37,6 +37,7 @@ public:
 	bool hasEdge(Point * first, Point * second);
 	virtual vector<vector<double> > getAdjacency();
 	virtual int getDepth();
+	void buildSpanner(string string);
     
 protected:
     vector<Point *> points;
