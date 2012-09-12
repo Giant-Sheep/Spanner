@@ -304,6 +304,14 @@ vector<Edge *> Spanner::getEdges() {
     return edges;
 }
 
+void Spanner::removeEdges() {
+	for (vector<Point *>::iterator it = points.begin(); it != points.end(); it++) {
+		(*it)->removeEdges();
+	}
+	
+	edges.clear();
+}
+
 void Spanner::addEdge(Edge* edge) {
     std::vector<Edge *> pEdges = edge->getFirst()->getEdges();
     bool found = false;

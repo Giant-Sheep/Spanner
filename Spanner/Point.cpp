@@ -34,6 +34,10 @@ vector<Edge *> Point::getEdges() {
     return edges;
 }
 
+void Point::removeEdges() {
+	edges.clear();
+}
+
 void Point::addEdge(Edge* edge) {
     edges.push_back(edge);
 }

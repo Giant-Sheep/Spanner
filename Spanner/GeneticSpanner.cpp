@@ -183,7 +183,7 @@ void initial_string_generator(double prob_for_1, string &s) {
 }
 
 
-bool mutation(double probability, string &s) {
+bool GeneticSpanner::mutation(double probability, string &s) {
 
 	int r = rand() % 10000;
 	double r2=r/10000.0;
@@ -207,7 +207,7 @@ bool mutation(double probability, string &s) {
 }
 
 
-void crossover(string &a, string &b) {
+void GeneticSpanner::crossover(string &a, string &b) {
 
 	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
 
@@ -220,4 +220,16 @@ void crossover(string &a, string &b) {
 
 	a=a2;
 	b=b2;
+}
+
+void GeneticSpanner::buildSpanner(Spanner *spanner, string string) {
+	size_t len = spanner->getPoints().size();
+	int row = 0;
+	vector<Point *> points = spanner->getPoints();
+	
+	while (len > 0) {
+		for (int col = 0; col < len; col++) {
+			spanner->addEdge(new Edge(points.at(col), points.at(row)));
+		}
+	}
 }

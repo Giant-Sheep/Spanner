@@ -27,6 +27,7 @@ public:
     int getY() const;
     void draw();
     void addEdge(Edge* edge);
+	void removeEdges();
     vector<Edge *> getEdges();
     
 private:

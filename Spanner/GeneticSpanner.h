@@ -27,6 +27,7 @@ public:
 	void initial_string_generator(double prob_for_1, string &s);
 	bool mutation(double probability, string &s);
 	void crossover(string &a, string &b);
+	void buildSpanner(Spanner *spanner, string string);
 
 private:
 	vector<Spanner *> population;
