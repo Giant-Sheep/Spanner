@@ -313,7 +313,15 @@ void Spanner::addEdge(Edge* edge) {
             found = true;
         }
     }
+	
+	pEdges = edge->getSecond()->getEdges();
     
+    for (std::vector<Edge *>::iterator i = pEdges.begin(); i != pEdges.end(); i++) {
+        if(((*i)->getFirst() == edge->getFirst() || (*i)->getFirst() == edge->getSecond()) && ((*i)->getSecond() == edge->getFirst() || (*i)->getSecond() == edge->getSecond())) {
+            found = true;
+        }
+    }
+	    
     if(found == false) {
         edges.push_back(edge);
         edge->getFirst()->addEdge(edge);
@@ -324,15 +332,15 @@ void Spanner::addEdge(Edge* edge) {
 bool Spanner::hasEdge(Point *first, Point *second) {
 	bool found = false;
 	
-	for(vector<Edge *>::iterator it = this->edges.begin(); it != this->edges.end(); it++) {
-		if((*it)->getFirst() == first) {
-			if((*it)->getSecond() == second) {
+	for (int i = 0; i < edges.size(); i++) {
+		if(edges[i]->getFirst() == first) {
+			if(edges[i]->getSecond() == second) {
 				found = true;
 				break;
 			}
 		}
-		else if((*it)->getSecond() == first) {
-			if((*it)->getFirst() == second) {
+		else if(edges[i]->getSecond() == first) {
+			if(edges[i]->getFirst() == second) {
 				found = true;
 				break;
 			}

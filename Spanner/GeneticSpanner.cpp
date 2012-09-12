@@ -7,12 +7,13 @@
 //
 
 #include "GeneticSpanner.h"
+#include "RandomSpanner.h"
 #include <cstdlib>
 #include <ctime>
 
 GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generation_size, size_t mating_pool_size, double x, double y) : Spanner(points, t), generation_size(generation_size) {
 	population_points = vector<vector<Point *> >();
-	population = vector<Spanner>();
+	population = vector<Spanner *>();
 	map<Spanner *, float> fitnesses;
 	vector<pair<Spanner *, Spanner *> > parents;
 	multimap<Spanner *, string> parent_strings;
@@ -25,42 +26,30 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			population_points.back().push_back(new Point((*it)->getX(), (*it)->getY()));
 		}
 		
-		population.push_back(WSPDSpanner(population_points.back(), t, x, y));
+		//TODO: Magic probability
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
 	}
 	
 	fitnesses = computeFitnesses(population);
 	sum = sumOfFitnesses(fitnesses);
 	mating_pool = generateMatingPool(fitnesses, sum, mating_pool_size);
 	parents = pairParents(mating_pool);
-	//parent_strings = generateStringRepresentation(parents);
+	parent_strings = generateStringRepresentation(parents);
 }
 
-GeneticSpanner::~GeneticSpanner() {
-	for(int i = 0; i < generation_size; i++) {
-		population_points.push_back(vector<Point *>());
-		for(vector<Point *>::iterator it = points.begin(); it != points.end(); it++) {
-			vector<Point *> points = population_points.back();
-			
-			for (vector<Point *>::iterator p_it = points.begin(); p_it != points.end(); p_it++) {
-				delete (*p_it);
-			}
-		}
-	}
-}
-
-map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner> spanners) {
+map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanners) {
 	map<Spanner *, float> fitnesses = map<Spanner *, float>();
 	
-	for(vector<Spanner>::iterator it = spanners.begin(); it != spanners.end(); it++) {
+	for(vector<Spanner *>::iterator it = spanners.begin(); it != spanners.end(); it++) {
 		float fitness = 0.f;
 		float offset = 0.f;
 		bool feasible = true;
 		
-		vector<Point *> spanner_points = (*it).getPoints();
+		vector<Point *> spanner_points = (*it)->getPoints();
 		
 		for (vector<Point *>::iterator first_point = spanner_points.begin(); first_point != spanner_points.end(); first_point++) {
 			for (vector<Point *>::iterator second_point = first_point + 1; second_point != spanner_points.end(); second_point++) {
-				float dilation = (*it).getDilation((*first_point), (*second_point));
+				float dilation = (*it)->getDilation((*first_point), (*second_point));
 				
 				offset += dilation;
 				if(dilation > t) {
@@ -76,9 +65,9 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner> spanners)
 			fitness += offset;
 		}
 		
-		fitness += (*it).getEdges().size();
+		fitness += (*it)->getEdges().size();
 		
-		fitnesses[&(*it)] = fitness;		
+		fitnesses[(*it)] = fitness;		
 	}
 	
 	return fitnesses;
@@ -96,6 +85,7 @@ float GeneticSpanner::sumOfFitnesses(map<Spanner *, float> fitnesses) {
 
 vector<Spanner *> GeneticSpanner::generateMatingPool(map<Spanner *, float> fitnesses, float sum, size_t size) {
 	vector<Spanner *> mating_pool = vector<Spanner *>();
+	map<Spanner *, float>::iterator it;
 	
 	srand ( (unsigned int)time(NULL) );
 	
@@ -103,7 +93,7 @@ vector<Spanner *> GeneticSpanner::generateMatingPool(map<Spanner *, float> fitne
 		float lottery = (float)rand() / ((float)RAND_MAX/sum);
 		float limit;
 		
-		map<Spanner *, float>::iterator it = fitnesses.begin();
+		it = fitnesses.begin();
 		limit = (*it).second;
 		
 		for (int j = 0; limit <= sum && j < fitnesses.size(); j++) {
@@ -142,12 +132,13 @@ vector<pair<Spanner *, Spanner *> > GeneticSpanner::pairParents(vector<Spanner *
 multimap<Spanner *, string> GeneticSpanner::generateStringRepresentation(vector<pair<Spanner *, Spanner *> > pairs) {
 	multimap<Spanner *, string> strings = multimap<Spanner *, string>();
 	string string_representation = "";
+	vector<Point *> point_list;
 	
 	for (vector<pair<Spanner *, Spanner *> >::iterator it = pairs.begin(); it != pairs.end(); it++) {
-		vector<Point *> point_list = (*it).first->getPoints();
+		point_list = (*it).first->getPoints();
 		string_representation = "";
-		for (vector<Point *>::iterator first_point = point_list.begin(); first_point != point_list.end(); first_point++) {
-			for (vector<Point *>::iterator second_point = first_point + 1; second_point != point_list.end(); second_point++) {
+		for (vector<Point *>::const_iterator first_point = point_list.begin(); first_point != point_list.end(); first_point++) {
+			for (vector<Point *>::const_iterator second_point = first_point + 1; second_point != point_list.end(); second_point++) {
 				if((*it).first->hasEdge(*first_point, *second_point)) {
 					string_representation += "1";
 				}
@@ -156,13 +147,13 @@ multimap<Spanner *, string> GeneticSpanner::generateStringRepresentation(vector<
 				}
 			}
 		}
-		//cout << string_representation << endl;
+		cout << string_representation << endl;
 		
 		point_list.clear();
 		point_list = (*it).second->getPoints();
 		string_representation = "";
-		for (vector<Point *>::iterator first_point = point_list.begin(); first_point != point_list.end(); first_point++) {
-			for (vector<Point *>::iterator second_point = first_point + 1; second_point != point_list.end(); second_point++) {
+		for (vector<Point *>::const_iterator first_point = point_list.begin(); first_point != point_list.end(); first_point++) {
+			for (vector<Point *>::const_iterator second_point = first_point + 1; second_point != point_list.end(); second_point++) {
 				if((*it).second->hasEdge(*first_point, *second_point)) {
 					string_representation += "1";
 				}
@@ -171,7 +162,7 @@ multimap<Spanner *, string> GeneticSpanner::generateStringRepresentation(vector<
 				}
 			}
 		}
-		//cout << string_representation << endl;
+		cout << string_representation << endl;
 	}
 	
 	return strings;
