@@ -176,3 +176,57 @@ multimap<Spanner *, string> GeneticSpanner::generateStringRepresentation(vector<
 	
 	return strings;
 }
+
+void initial_string_generator(double prob_for_1, string &s) {
+	for (int i=0; i<s.length(); i++) {
+		int r = rand() % 10000;
+		double r2=r/10000.0;
+
+		if (r2 < prob_for_1) {
+			s[i] = '1';
+		}
+		else {
+			s[i] = '0';
+		}
+	}
+}
+
+
+bool mutation(double probability, string &s) {
+
+	int r = rand() % 10000;
+	double r2=r/10000.0;
+
+	if (r2 < probability) {
+
+		int mutation_point = (int)(rand() % s.length());
+
+		if (s[mutation_point] == '1') {
+			s[mutation_point] = '0';
+		}
+		else {
+			s[mutation_point] = '1';
+		}
+
+		if(DEBUG) {cout << "m: " << s << " prob: " << r2 << " point: " << mutation_point << endl;}
+
+		return true;
+	}
+	return false;
+}
+
+
+void crossover(string &a, string &b) {
+
+	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
+
+	if(DEBUG) {cout << "crossover_point: " << crossover_point << endl;}
+
+	string a2 (a, 0, crossover_point);
+	a2.append(b, crossover_point, b.length()-crossover_point);
+	string b2 (b, 0, crossover_point);
+	b2.append(a, crossover_point, a.length()-crossover_point);
+
+	a=a2;
+	b=b2;
+}

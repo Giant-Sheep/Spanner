@@ -25,7 +25,10 @@ public:
 	vector<Spanner *> generateMatingPool(map<Spanner *, float> fitnesses, float sum, size_t size);
 	vector<pair<Spanner *, Spanner *> > pairParents(vector<Spanner *> mating_pool);
 	multimap<Spanner *, string> generateStringRepresentation(vector<pair<Spanner *, Spanner *> > pairs); // doesn't work
-	
+	void initial_string_generator(double prob_for_1, string &s);
+	bool mutation(double probability, string &s);
+	void crossover(string &a, string &b);
+
 private:
 	vector<Spanner> population;
 	vector<vector<Point *> > population_points;
