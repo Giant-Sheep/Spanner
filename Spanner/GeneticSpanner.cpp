@@ -118,13 +118,13 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 			for (vector<Point *>::iterator second_point = first_point + 1; second_point != spanner_points.end(); second_point++) {
 				float dilation = (*it)->getDilation((*first_point), (*second_point));
                 
-				cout << "dilation: " << dilation << endl;
+//				cout << "dilation: " << dilation << endl;
 				offset += dilation;
 				if(dilation > t) {
 					feasible = false;
 				}
                 else if (dilation == INT_MAX) {
-                    fitness += 1000; //TODO magic number
+                    fitness -= 100; //TODO magic number
                 }
 				else {
 					fitness += dilation;
@@ -141,10 +141,12 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 
 		cout << "Fitness + offset: " << fitness << endl;
         
-		fitness += (*it)->getEdges().size() * 2;
+		fitness -= (*it)->getEdges().size() * 10; // TODO link to number of edges?
 		cout << "Fitness + edges.size: " << fitness << endl;
 		
-
+        if (fitness<0) {
+            fitness = 0.0;
+        }
 		fitnesses[(*it)] = fitness;		
         
 	}
