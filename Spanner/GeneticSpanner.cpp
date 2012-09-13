@@ -27,7 +27,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.75));
 	}
 	
 	// Test GA
@@ -45,15 +45,12 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			GeneticSpanner::mutation(0.1, mom.second);
 			GeneticSpanner::mutation(0.1, dad.second);
 			
-			cout << "Before size: " << mom.first->getEdges().size() << endl;
 			mom.first->removeEdges();
 			dad.first->removeEdges();
 			
 			mom.first->buildSpanner(mom.second);
 			dad.first->buildSpanner(dad.second);
-			
-			cout << "After size: " << mom.first->getEdges().size() << endl;
-			
+						
 			double min = INT_MAX;
 			for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
 				double dil = (*it)->getMaxDilation();
@@ -93,19 +90,28 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 				if(dilation > t) {
 					feasible = false;
 				}
+                else if (dilation == 0) {
+                    fitness += 10; //TODO magic number
+                }
 				else {
 					fitness += dilation;
 				}
+                cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << dilation << " Feasible: " << feasible << endl;
 			}
+            
 		}
 		
 		if(!feasible) {
 			fitness += offset;
 		}
-		
+		cout << "Fitness + offset: " << fitness << endl;
+        
 		fitness += (*it)->getEdges().size();
+		cout << "Fitness + edges.size: " << fitness << endl;
 		
+
 		fitnesses[(*it)] = fitness;		
+        
 	}
 	
 	return fitnesses;
@@ -239,8 +245,6 @@ void initial_string_generator(double prob_for_1, string &s) {
 			s[mutation_point] = '1';
 		}
 
-		//if(DEBUG) {cout << "m: " << s << " prob: " << r2 << " point: " << mutation_point << endl;}
-
 		return true;
 	}
 	return false;
@@ -250,8 +254,6 @@ void initial_string_generator(double prob_for_1, string &s) {
 void GeneticSpanner::crossover(string &a, string &b) {
 
 	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
-
-	//if(DEBUG) {cout << "crossover_point: " << crossover_point << endl;}
 
 	string a2 (a, 0, crossover_point);
 	a2.append(b, crossover_point, b.length()-crossover_point);

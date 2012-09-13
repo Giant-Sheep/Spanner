@@ -21,6 +21,7 @@ double Spanner::getMaxDilation() {
     double max = 0; 
     for (std::vector<Point *>::iterator i = points.begin(); i != points.end(); i++) {
         double tentative = getDilation(true, (*i));
+        
         if(tentative > max) {
             max = tentative;
         }
@@ -64,7 +65,6 @@ double Spanner::getDilation(bool maximum, Point * first, Point * second) {
             if(maximum == false) {
                 return INT_MAX;
             }
-            
             break;
         }
         
@@ -368,7 +368,6 @@ void Spanner::buildSpanner(string s) {
 		for (int col = 0; col < row_len; col++) {
 			if (s.compare(loc, 1, "1") == 0) {
 				this->addEdge(new Edge(points.at(col+row), points.at(row)));
-				cout << col << " " << row << endl;
 			}
 			loc++;
 		}
