@@ -19,6 +19,7 @@ int Spanner::getDepth() {
 
 double Spanner::getMaxDilation() {
     double max = 0; 
+    //double max = INT_MAX;
     for (std::vector<Point *>::iterator i = points.begin(); i != points.end(); i++) {
         double tentative = getDilation(true, (*i));
         
@@ -26,7 +27,7 @@ double Spanner::getMaxDilation() {
             max = tentative;
         }
     }
-    
+
     return max;
 }
 

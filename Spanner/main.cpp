@@ -371,7 +371,7 @@ static void key_func(unsigned char key, int x, int y) {
 int main (int argc, char** argv)
 {
     if(argc == 1) {
-        n = 10;
+        n = 30;
         a = 15;
         b = 10;
         mx = 640;
