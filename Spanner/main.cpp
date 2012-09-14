@@ -116,6 +116,7 @@ static void ReadData() {
 			in >> x;
 			if (x*1.1>xmax) {xmax=x*1.1;}
 			in >> y;
+            y = 600 - y; //TODO flipping y coordinates for the supermarket data
 			if (y*1.1>ymax) {ymax=y*1.1;}
 
             bool ok=true;
@@ -167,7 +168,7 @@ void resetSpanner() {
             spanner = new WSPDSpanner(points, t, xmax, ymax);
             break;
 		case 4:
-			spanner = new GeneticSpanner(points, t, 10, 4, xmax, ymax);
+			spanner = new GeneticSpanner(points, t, 20, 10, xmax, ymax);
         default:
             break;
     }
@@ -371,7 +372,7 @@ static void key_func(unsigned char key, int x, int y) {
 int main (int argc, char** argv)
 {
     if(argc == 1) {
-        n = 30;
+        n = 100;
         a = 15;
         b = 10;
         mx = 640;
@@ -387,8 +388,7 @@ int main (int argc, char** argv)
         my = atoi(argv[6]);
         GenerateData(n, a, b, mx, my);
     }
-    
-    
+  
 //	std::cout << "Read file (0) or generate random (1): ";
 //	std::cin>>k;
 //	if(k==1){

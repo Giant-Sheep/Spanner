@@ -10,6 +10,7 @@
 #include "RandomSpanner.h"
 #include <cstdlib>
 #include <ctime>
+// 			spanner = new GeneticSpanner(points, t, 20, 10, xmax, ymax);
 
 GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generation_size, size_t mating_pool_size, double x, double y) : Spanner(points, t), generation_size(generation_size) {
 	population_points = vector<vector<Point *> >();
@@ -62,21 +63,25 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
 				double dil = (*it)->getMaxDilation();
 //                cout << "dil " << dil << endl;
-				if(dil > 0 && dil < min_dil) {
+				if(dil>1 && dil < min_dil) {
 					min_dil = dil;
 				}
 			}
 			
-			cout << "Dilation: " << min_dil << endl;
+//			cout << "Dilation: " << min_dil << endl;
+            
             
 		}
+        cout << "i: " << 1000-iter_limit << endl;
+
         iter_limit--;
 	}
+	cout << "Final Dilation: " << min_dil << endl;
     
 	double min = INT_MAX;
 	for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
 		double dil = (*it)->getMaxDilation();
-		if(dil > 0 && dil < min) {
+		if(dil < min) {
 			min = dil;
 		}
 	}
@@ -87,11 +92,12 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
     Spanner *min_spanner = NULL;
     
     for (map<Spanner *, float>::iterator iter = fitnesses.begin(); iter != fitnesses.end(); iter++) {
-        if ((*iter).second < min_fitness) {
+        if ((*iter).second > min_fitness) {
             min_fitness = (*iter).second;
             min_spanner = (*iter).first;
         }
     }
+    cout << "max dilation " << min_spanner->getMaxDilation() << endl;
     cout << "Min fitness: " << min_fitness << endl;
 //    cout << "Spanner edges : " << min_spanner->getEdges().size() << endl;
     
@@ -129,7 +135,7 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 				else {
 					fitness += dilation;
 				}
-        //        cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << dilation << " Feasible: " << feasible << endl;
+                cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << dilation << " Feasible: " << feasible << endl;
 			}
             
 		}
@@ -137,12 +143,12 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 		if(!feasible) {
 			fitness += offset;
 		}
-        cout << "Offset: " << offset << endl;
+//        cout << "Offset: " << offset << endl;
 
-		cout << "Fitness + offset: " << fitness << endl;
+//		cout << "Fitness + offset: " << fitness << endl;
         
 		fitness -= (*it)->getEdges().size() * 15; // TODO link to number of edges?
-		cout << "Fitness + edges.size: " << fitness << endl;
+//		cout << "Fitness + edges.size: " << fitness << endl;
 		
         if (fitness<0) {
             fitness = 0.0;
