@@ -28,7 +28,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.75));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
 	}
 	
 	// Test GA
@@ -50,10 +50,12 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		parents = pairParents(mating_pool);
 		parent_strings = generateStringRepresentation(parents);
 
+		pair<Spanner*, string> mom;
+		pair<Spanner*, string> dad;
 		for (multimap<Spanner *, string>::iterator it = parent_strings.begin(); it != parent_strings.end(); it++) {
-			pair<Spanner*, string> mom = pair<Spanner *, string>((*it).first, (*it).second);
+			mom = pair<Spanner *, string>((*it).first, (*it).second);
 			it++;
-			pair<Spanner*, string> dad = pair<Spanner *, string>((*it).first, (*it).second);
+			dad = pair<Spanner *, string>((*it).first, (*it).second);
 			GeneticSpanner::crossover(mom.second, dad.second);
 			
 			if(iter_limit == 0) {
@@ -62,18 +64,26 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			
 			GeneticSpanner::mutation(mutation_probability, mom.second);
 			GeneticSpanner::mutation(mutation_probability, dad.second);
-			fitnesses = this->computeFitnesses(population);
-			for (multimap<Spanner*, string>::iterator parent_it = parent_strings.begin(); parent_it != parent_strings.end(); parent_it++) {
-				float max_spanner = 0;
-				Spanner *found;
-				for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
-					if((*fit_it).second > max_spanner) {
-						max_spanner = (*fit_it).second;
-						found = (*fit_it).first;
-					}
+		}
+		fitnesses = this->computeFitnesses(population);
+		
+		for (multimap<Spanner*, string>::iterator parent_it = parent_strings.begin(); parent_it != parent_strings.end(); parent_it++) {
+			float max_spanner = 0;
+			Spanner *found;
+			for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
+				if((*fit_it).second > max_spanner) {
+					max_spanner = (*fit_it).second;
+					found = (*fit_it).first;
 				}
-				*found = *(*parent_it).first;
 			}
+			*found = *(*parent_it).first;
+		}
+		
+		for (multimap<Spanner *, string>::iterator it = parent_strings.begin(); it != parent_strings.end(); it++) {
+			mom = pair<Spanner *, string>((*it).first, (*it).second);
+			it++;
+			dad = pair<Spanner *, string>((*it).first, (*it).second);
+			
 			mom.first->removeEdges();
 			dad.first->removeEdges();
 			
@@ -167,7 +177,7 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 				
 				//offset = (*it)->getEdges().size();
 				if(dilation == INT_MAX) {
-					fitness += offset*10; //TODO magic number
+					fitness += offset*1000; //TODO magic number
 					feasible = false;
 				}
                 else if (dilation > t) {
@@ -184,22 +194,8 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 			//fitness += offset;
 			if(max_dil != INT_MAX) {
 				float dist_from_t = (max_dil - this->t);
-				/*if(dist_from_t > 10*t) {
-					fitness += (max_dil - this->t) * (*it)->getEdges().size()*10;
-				}
-				if(dist_from_t > 6*t) {
-					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 8;
-				}
-				else if(dist_from_t > 4*t) {
-					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 6;
-				}
-				else if( dist_from_t > 2*t) {
-					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 4;
-				}
-				else {
-					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 2;
-				}*/
-				fitness += dist_from_t * dist_from_t * dist_from_t * offset;
+				
+				fitness += dist_from_t *dist_from_t *dist_from_t * dist_from_t * offset;
 			}
 		}
         
