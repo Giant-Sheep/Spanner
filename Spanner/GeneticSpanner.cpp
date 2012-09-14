@@ -59,8 +59,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			mom.first->buildSpanner(mom.second);
 			dad.first->buildSpanner(dad.second);
 						
-			for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
-				double dil = (*it)->getMaxDilation();
+			for (int i = 0; i < population.size(); i++) {
+				double dil = population[i]->getMaxDilation();
 //                cout << "dil " << dil << endl;
 				if(dil>1 && dil < min_dil) {
 					min_dil = dil;
@@ -91,7 +91,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
     Spanner *min_spanner = NULL;
 	
 	for (map<Spanner *, float>::iterator iter = fitnesses.begin(); iter != fitnesses.end(); iter++) {
-        if ((*iter).second < min_fitness) {
+        if ((*iter).second < min_fitness && (*iter).first->getMaxDilation() < t) {
             min_fitness = (*iter).second;
             min_spanner = (*iter).first;
         }
@@ -118,7 +118,7 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 	for(vector<Spanner *>::iterator it = spanners.begin(); it != spanners.end(); it++) {
 		float fitness = 0.f;
 		bool feasible = true;
-        offset = 0.f;
+        offset = 1.f;
 		
 		vector<Point *> spanner_points = (*it)->getPoints();
 		
@@ -128,13 +128,14 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
                 
 //				cout << "dilation: " << dilation << endl;
 				
-				if(dilation != INT_MAX) {
+				if(dilation < INT_MAX-100) {
 					offset += dilation;
 				}
 				
 				
-				if(dilation > 100000) {
-					fitness += 2*offset; //TODO magic number
+				if(dilation > INT_MAX - 100) {
+					fitness += 1000; //TODO magic number
+					feasible = false;
 				}
                 else if (dilation > t) {
 					feasible = false;
@@ -142,14 +143,14 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 				else {
 					fitness += dilation;
 				}
-                cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << dilation << " Feasible: " << feasible << endl;
+                //cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << dilation << " Feasible: " << feasible << endl;
 			}
-            
 		}
 		
 		if(!feasible) {
 			fitness += offset;
 		}
+		cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << (*it)->getMaxDilation() << " Feasible: " << feasible << endl;
 //        cout << "Offset: " << offset << endl;
 
 //		cout << "Fitness + offset: " << fitness << endl;
