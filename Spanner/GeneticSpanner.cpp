@@ -10,7 +10,6 @@
 #include "RandomSpanner.h"
 #include <cstdlib>
 #include <ctime>
-// 			spanner = new GeneticSpanner(points, t, 20, 10, xmax, ymax);
 
 GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generation_size, size_t mating_pool_size, double x, double y) : Spanner(points, t), generation_size(generation_size) {
 	population_points = vector<vector<Point *> >();
@@ -88,7 +87,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	cout << "Final Dilation: " << min << endl;
     
     
-    float min_fitness = INT_MAX;
+    float min_fitness = 0;
     Spanner *min_spanner = NULL;
     
     for (map<Spanner *, float>::iterator iter = fitnesses.begin(); iter != fitnesses.end(); iter++) {
