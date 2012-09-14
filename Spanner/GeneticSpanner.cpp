@@ -99,7 +99,10 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
         min_spanner->getEdges().at(x)->draw();
     }*/
     if (min_fitness < INT_MAX) {
-        this->edges = min_spanner->getEdges();
+		vector<pair<Spanner *, Spanner *> > spannerpair = vector<pair<Spanner *, Spanner *> >();
+		spannerpair.push_back(pair<Spanner *, Spanner *>(min_spanner, min_spanner));
+		multimap<Spanner *, string> tempmap = this->generateStringRepresentation(spannerpair);
+        this->buildSpanner(tempmap.find(min_spanner)->second);
     }
 }
 
