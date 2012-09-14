@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369346267.504879"
+         timestampString = "369353159.255984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
          landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369346267.504879"
+         timestampString = "369352661.583474"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
          landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,24 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369346267.504879"
+         timestampString = "369353569.767713"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "53"
-         endingLineNumber = "53"
-         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "275"
-         endingLineNumber = "275"
+         startingLineNumber = "288"
+         endingLineNumber = "288"
          landmarkName = "GeneticSpanner::generateStringRepresentation(vector&lt;pair&lt;Spanner *, Spanner *&gt; &gt; pairs)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
+         timestampString = "369353569.767713"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "308"
-         endingLineNumber = "308"
+         startingLineNumber = "321"
+         endingLineNumber = "321"
          landmarkName = "GeneticSpanner::generateStringRepresentation(vector&lt;pair&lt;Spanner *, Spanner *&gt; &gt; pairs)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
+         timestampString = "369353569.767713"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "257"
-         endingLineNumber = "257"
+         startingLineNumber = "270"
+         endingLineNumber = "270"
          landmarkName = "GeneticSpanner::pairParents(vector&lt;Spanner *&gt; mating_pool)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +86,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
+         timestampString = "369353569.767713"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "217"
-         endingLineNumber = "217"
+         startingLineNumber = "226"
+         endingLineNumber = "226"
+         landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353569.767713"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "245"
+         endingLineNumber = "245"
          landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
+         timestampString = "369353569.767713"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
+         startingLineNumber = "260"
+         endingLineNumber = "260"
          landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,7 +125,46 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
+         timestampString = "369353159.255984"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "61"
+         endingLineNumber = "61"
+         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369352661.583474"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
+         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353569.767713"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "228"
+         endingLineNumber = "228"
+         landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353569.767713"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "247"
@@ -134,15 +173,41 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369350278.952974"
+         timestampString = "369353254.388668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "71"
-         endingLineNumber = "71"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
+         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353262.228664"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
+         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353263.706786"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
          landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,64 +216,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369350285.501882"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "60"
-         endingLineNumber = "60"
-         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369350287.806511"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
-         landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "219"
-         endingLineNumber = "219"
-         landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369351808.660852"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "234"
-         endingLineNumber = "234"
-         landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Spanner/GeneticSpanner.cpp"
-         timestampString = "369350806.270972"
+         timestampString = "369353265.748314"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "77"
          endingLineNumber = "77"
          landmarkName = "GeneticSpanner::GeneticSpanner(vector&lt;Point *&gt; points, double t, size_t generation_size, size_t mating_pool_size, double x, double y)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353569.767713"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "237"
+         endingLineNumber = "237"
+         landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353411.366066"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
+         landmarkName = "GeneticSpanner::sumOfFitnesses(map&lt;Spanner *, float&gt; fitnesses)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Spanner/GeneticSpanner.cpp"
+         timestampString = "369353569.767713"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "227"
+         endingLineNumber = "227"
+         landmarkName = "GeneticSpanner::generateMatingPool(map&lt;Spanner *, float&gt; fitnesses, float sum, size_t size)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
