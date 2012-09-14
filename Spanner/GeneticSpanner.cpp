@@ -76,7 +76,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	double min = INT_MAX;
 	for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
 		double dil = (*it)->getMaxDilation();
-		if(dil > 0 && dil < min) {
+		if(dil < min) {
 			min = dil;
 		}
 	}
