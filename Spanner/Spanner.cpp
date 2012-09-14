@@ -363,13 +363,13 @@ bool Spanner::hasEdge(Point *first, Point *second) {
 }
 
 void Spanner::buildSpanner(string s) {
-	int row_len = points.size()-1;
+	int row_len = points.size();
 	int loc = 0;
 	int row = 0;
 	
 
 	while (row_len > 0 && row < points.size()) {
-		for (int col = 0; col < row_len; col++) {
+		for (int col = 1; col < row_len; col++) {
 			if (s.compare(loc, 1, "1") == 0) {
 				this->addEdge(new Edge(points.at(col+row), points.at(row)));
 			}
