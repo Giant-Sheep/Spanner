@@ -28,7 +28,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.10));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
 	}
 	
 	// Test GA
@@ -44,7 +44,6 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
         
 		mating_pool = generateMatingPool(fitnesses, sum, mating_pool_size);
 		parents = pairParents(mating_pool);
-		parent_strings.clear();
 		parent_strings = generateStringRepresentation(parents);
 
 		for (multimap<Spanner *, string>::iterator it = parent_strings.begin(); it != parent_strings.end(); it++) {
@@ -60,11 +59,23 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			GeneticSpanner::mutation(mutation_probability, mom.second);
 			GeneticSpanner::mutation(mutation_probability, dad.second);
 			
-			mom.first->removeEdges();
-			dad.first->removeEdges();
-			
-			mom.first->buildSpanner(mom.second);
-			dad.first->buildSpanner(dad.second);
+			for (int i = 0; i < mating_pool_size; i++) {
+				float max_spanner = 0;
+				Spanner *first_found, *second_found;
+				for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
+					if((*fit_it).second > max_spanner) {
+						max_spanner = (*fit_it).second;
+						second_found = first_found;
+						first_found = (*fit_it).first;
+					}
+				}
+				
+				first_found->removeEdges();
+				second_found->removeEdges();
+				
+				first_found->buildSpanner(mom.second);
+				second_found->buildSpanner(dad.second);
+			}
 						
 			for (int i = 0; i < population.size(); i++) {
 				double dil = population[i]->getMaxDilation();
@@ -148,7 +159,7 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 				
 				offset = (*it)->getEdges().size();
 				if(dilation == INT_MAX) {
-					fitness += (*it)->getEdges().size()*30; //TODO magic number
+					fitness += (*it)->getEdges().size()*1000; //TODO magic number
 					feasible = false;
 				}
                 else if (dilation > t) {
@@ -164,13 +175,29 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 		if(!feasible) {
 			//fitness += offset;
 			if(max_dil != INT_MAX) {
-				fitness += (max_dil - this->t) * (*it)->getEdges().size();
+				float dist_from_t = (max_dil - this->t);
+				/*if(dist_from_t > 10*t) {
+					fitness += (max_dil - this->t) * (*it)->getEdges().size()*10;
+				}
+				if(dist_from_t > 6*t) {
+					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 8;
+				}
+				else if(dist_from_t > 4*t) {
+					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 6;
+				}
+				else if( dist_from_t > 2*t) {
+					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 4;
+				}
+				else {
+					fitness += (max_dil - this->t) * (*it)->getEdges().size() * 2;
+				}*/
+				fitness += dist_from_t*dist_from_t * (*it)->getEdges().size();
 			}
 		}
         
 		fitness += (*it)->getEdges().size();
 		
-		//cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << (*it)->getMaxDilation() << " Feasible: " << feasible << endl;
+		cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << (*it)->getMaxDilation() << " Feasible: " << feasible << endl;
 
 		fitnesses[(*it)] = fitness;		
         
@@ -191,15 +218,21 @@ float GeneticSpanner::sumOfFitnesses(map<Spanner *, float> fitnesses) {
 
 vector<Spanner *> GeneticSpanner::generateMatingPool(map<Spanner *, float> fitnesses, float sum, size_t size) {
 	vector<Spanner *> mating_pool = vector<Spanner *>();
-	map<Spanner *, float>::iterator it;
 	
 	srand ( (unsigned int)time(NULL) );
 	
 	for (map<Spanner *, float>::iterator it = fitnesses.begin(); it != fitnesses.end(); it++) {
 		(*it).second /= sum;
 		(*it).second = 1.0f/(*it).second;
-		(*it).second /= this->sumOfFitnesses(fitnesses);
 	}
+	
+	float fit_sum = this->sumOfFitnesses(fitnesses);
+	for (map<Spanner *, float>::iterator it = fitnesses.begin(); it != fitnesses.end(); it++) {
+		(*it).second /= fit_sum;
+	}
+	
+	
+	map<Spanner *, float>::iterator it;
 	
 	for (int i = 0; i < size; i++) {
 		float lottery = (float)rand() / ((float)RAND_MAX);
