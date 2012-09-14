@@ -131,8 +131,8 @@ void printMetrics() {
     cout << "Size: " << spanner->getSize() << std::endl; 
     cout << "Weight: " << spanner->getWeight() << std::endl;
     cout << "Max Degree: " << spanner->getMaxDegree() << std::endl;
-	cout << "Max Dilation (Marieke): " << spanner->getDilation() << std::endl;
-    //cout << "Max Dilation (Matias): " << spanner->getMaxDilation() << std::endl << std::endl;
+	//cout << "Max Dilation (Marieke): " << spanner->getDilation() << std::endl;
+    cout << "Max Dilation (Matias): " << spanner->getMaxDilation() << std::endl << std::endl;
 }
 
 static void draw() {

@@ -27,7 +27,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.15));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.50));
 	}
 	
 	// Test GA
@@ -87,16 +87,16 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	cout << "Final Dilation: " << min << endl;
     
     
-    float min_fitness = 0;
+    float min_fitness = INT_MAX;
     Spanner *min_spanner = NULL;
-    
-    for (map<Spanner *, float>::iterator iter = fitnesses.begin(); iter != fitnesses.end(); iter++) {
-        if ((*iter).second > min_fitness) {
+	
+	for (map<Spanner *, float>::iterator iter = fitnesses.begin(); iter != fitnesses.end(); iter++) {
+        if ((*iter).second < min_fitness) {
             min_fitness = (*iter).second;
             min_spanner = (*iter).first;
         }
     }
-    cout << "max dilation " << min_spanner->getMaxDilation() << endl;
+    //cout << "max dilation " << min_spanner->getMaxDilation() << endl;
     cout << "Min fitness: " << min_fitness << endl;
 //    cout << "Spanner edges : " << min_spanner->getEdges().size() << endl;
     
@@ -127,12 +127,17 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 				float dilation = (*it)->getDilation((*first_point), (*second_point));
                 
 //				cout << "dilation: " << dilation << endl;
-				offset += dilation;
-				if(dilation > t) {
-					feasible = false;
+				
+				if(dilation != INT_MAX) {
+					offset += dilation;
 				}
-                else if (dilation == INT_MAX) {
-                    fitness -= 500; //TODO magic number
+				
+				
+				if(dilation > 100000) {
+					fitness += 2*offset; //TODO magic number
+				}
+                else if (dilation > t) {
+					feasible = false;
                 }
 				else {
 					fitness += dilation;
@@ -149,12 +154,10 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 
 //		cout << "Fitness + offset: " << fitness << endl;
         
-		fitness -= (*it)->getEdges().size() * 15; // TODO link to number of edges?
+		fitness += (*it)->getEdges().size() * 15; // TODO link to number of edges?
 //		cout << "Fitness + edges.size: " << fitness << endl;
 		
-        if (fitness<0) {
-            fitness = 0.0;
-        }
+
 		fitnesses[(*it)] = fitness;		
         
 	}
@@ -178,14 +181,20 @@ vector<Spanner *> GeneticSpanner::generateMatingPool(map<Spanner *, float> fitne
 	
 	srand ( (unsigned int)time(NULL) );
 	
+	for (map<Spanner *, float>::iterator it = fitnesses.begin(); it != fitnesses.end(); it++) {
+		(*it).second /= sum;
+		(*it).second = 1.0f/(*it).second;
+		(*it).second /= this->sumOfFitnesses(fitnesses);
+	}
+	
 	for (int i = 0; i < size; i++) {
-		float lottery = (float)rand() / ((float)RAND_MAX/sum);
+		float lottery = (float)rand() / ((float)RAND_MAX);
 		float limit;
 		
 		it = fitnesses.begin();
 		limit = (*it).second;
 		
-		for (int j = 0; limit <= sum && j < fitnesses.size(); j++) {
+		for (int j = 0; limit <= 1.f && j < fitnesses.size(); j++) {
 			if (lottery > limit) {
 				it++;
 				limit += (*it).second;
