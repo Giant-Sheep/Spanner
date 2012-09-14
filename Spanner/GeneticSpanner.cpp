@@ -19,7 +19,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	multimap<Spanner *, string> parent_strings;
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
-	int mutation_probability = 0.2;
+	int mutation_probability = 0.1;
 	
 	for(int i = 0; i < generation_size; i++) {
 		population_points.push_back(vector<Point *>());
@@ -28,15 +28,19 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.75));
 	}
 	
 	// Test GA
 //	for (int i = 0; i < 10; i++) {
     double min_dil = INT_MAX;
-    int iter_limit = 100;
+    int iter_limit = 500;
 
-    while (min_dil > t || iter_limit >= 0) {
+    while (min_dil > t) {
+        
+        if (iter_limit < 0) { break;}
+ //   while (iter_limit > 0) {
+
 		fitnesses = computeFitnesses(population);
 		sum = sumOfFitnesses(fitnesses);
         
@@ -75,27 +79,32 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			
 			mom.first->buildSpanner(mom.second);
 			dad.first->buildSpanner(dad.second);
-						
+        }
+            cout << "population size " << population.size() << endl;
 			for (int i = 0; i < population.size(); i++) {
 				double dil = population[i]->getMaxDilation();
-                //cout << "dil " << dil << endl;
-				if(dil < min_dil) {
+                cout << "dil " << dil << endl;
+				if(dil < min_dil && min_dil > 1) {
 					min_dil = dil;
 				}
 			}
-		}
-        cout << "i: " << 1000-iter_limit << "min_dil " << min_dil <<  endl;
+		
+        cout << "iter_limit: " << iter_limit << "min_dil " << min_dil <<  " loop " << ((min_dil > t || iter_limit > 0)) << endl;
 
         iter_limit--;
 	}
 	cout << "Final Dilation: " << min_dil << endl;
     
 	double min = INT_MAX;
+    int min_dil_index = 0;
+    int ii = 0;
 	for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
 		double dil = (*it)->getMaxDilation();
 		if(dil < min) {
+            min_dil_index = ii;
 			min = dil;
 		}
+        ii++;
 	}
 	cout << "Final Dilation: " << min << endl;
     
@@ -119,6 +128,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
     /*for(unsigned int x = 0; x < min_spanner->getEdges().size(); x++) {
         min_spanner->getEdges().at(x)->draw();
     }*/
+    min_spanner = min_dil_index;
+    
     if (min_fitness < INT_MAX) {
 		vector<pair<Spanner *, Spanner *> > spannerpair = vector<pair<Spanner *, Spanner *> >();
 		spannerpair.push_back(pair<Spanner *, Spanner *>(population[min_spanner], population[min_spanner]));
