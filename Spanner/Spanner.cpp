@@ -63,9 +63,7 @@ double Spanner::getDilation(bool maximum, Point * first, Point * second) {
         
         // All remaining points unreachable
         if (dist[index] == INT_MAX) {
-            if(maximum == false) {
-                return INT_MAX;
-            }
+			return INT_MAX;
             break;
         }
         
@@ -76,8 +74,13 @@ double Spanner::getDilation(bool maximum, Point * first, Point * second) {
         nodes.erase(nodes.begin()+index);
         
         // Terminate here if only calculating the dilation between two points
-        if(max == false && current == second) {
-            return currentDist / (sqrt((pow(first->getX() - current->getX(), 2.0) + pow(first->getY() - current->getY(), 2.0))));
+        if(maximum == false && current == second) {
+			if(currentDist == INT_MAX) {
+				return INT_MAX;
+			}
+			else {
+				return currentDist / (sqrt((pow(first->getX() - current->getX(), 2.0) + pow(first->getY() - current->getY(), 2.0))));
+			}
         }
         
         // Keep track of the current maximum dilation
