@@ -19,7 +19,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	multimap<Spanner *, string> parent_strings;
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
-	int mutation_probability = 0.1;
+	int mutation_probability = 0.7;
 	
 	for(int i = 0; i < generation_size; i++) {
 		population_points.push_back(vector<Point *>());
@@ -83,11 +83,12 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
             cout << "population size " << population.size() << endl;
 			for (int i = 0; i < population.size(); i++) {
 				double dil = population[i]->getMaxDilation();
-                cout << "dil " << dil << endl;
+                cout << " " << dil;
 				if(dil < min_dil && min_dil > 1) {
 					min_dil = dil;
 				}
 			}
+        cout << " " << endl;
 		
         cout << "iter_limit: " << iter_limit << "min_dil " << min_dil <<  " loop " << ((min_dil > t || iter_limit > 0)) << endl;
 
