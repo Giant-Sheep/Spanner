@@ -28,7 +28,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.25));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.5));
 	}
 	
 	// Test GA
@@ -61,21 +61,20 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			
 			for (int i = 0; i < mating_pool_size; i++) {
 				float max_spanner = 0;
-				Spanner *first_found, *second_found;
+				Spanner *found;
 				for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
 					if((*fit_it).second > max_spanner) {
 						max_spanner = (*fit_it).second;
-						second_found = first_found;
-						first_found = (*fit_it).first;
+						found = (*fit_it).first;
 					}
 				}
-				
-				first_found->removeEdges();
-				second_found->removeEdges();
-				
-				first_found->buildSpanner(mom.second);
-				second_found->buildSpanner(dad.second);
+				*found = *population[i];
 			}
+			mom.first->removeEdges();
+			dad.first->removeEdges();
+			
+			mom.first->buildSpanner(mom.second);
+			dad.first->buildSpanner(dad.second);
 						
 			for (int i = 0; i < population.size(); i++) {
 				double dil = population[i]->getMaxDilation();
