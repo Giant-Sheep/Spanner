@@ -25,7 +25,7 @@ public:
 	vector<pair<Spanner *, Spanner *> > pairParents(vector<Spanner *> mating_pool);
 	multimap<Spanner *, string> generateStringRepresentation(vector<pair<Spanner *, Spanner *> > pairs); // doesn't work
 	void initial_string_generator(double prob_for_1, string &s);
-	static bool mutation(double probability, string &s);
+	static void mutation(double probability, string &s, int t);
 	static void crossover(string &a, string &b);
 
 private:

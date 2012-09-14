@@ -168,7 +168,7 @@ void resetSpanner() {
             spanner = new WSPDSpanner(points, t, xmax, ymax);
             break;
 		case 4:
-			spanner = new GeneticSpanner(points, t, 80, 10, xmax, ymax);
+			spanner = new GeneticSpanner(points, t, 40, 30, xmax, ymax);
         default:
             break;
     }
@@ -372,7 +372,7 @@ static void key_func(unsigned char key, int x, int y) {
 int main (int argc, char** argv)
 {
     if(argc == 1) {
-        n = 20;
+        n = 45;
         a = 15;
         b = 10;
         mx = 640;

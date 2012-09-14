@@ -19,8 +19,9 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	multimap<Spanner *, string> parent_strings;
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
-	int mutation_probability = 0.7;
-	
+	int mutation_probability = 0.95;
+	int mutations = 10;
+    
 	for(int i = 0; i < generation_size; i++) {
 		population_points.push_back(vector<Point *>());
 		for(vector<Point *>::iterator it = points.begin(); it != points.end(); it++) {
@@ -28,7 +29,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.75));
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.85));
 	}
 	
 	// Test GA
@@ -59,9 +60,14 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			if(iter_limit == 0) {
 				mutation_probability = 0.05;
 			}
+            mom.first->removeEdges();
+			dad.first->removeEdges();
+			GeneticSpanner::mutation(mutation_probability, mom.second, mutations);
+			GeneticSpanner::mutation(mutation_probability, dad.second, mutations);
 			
-			GeneticSpanner::mutation(mutation_probability, mom.second);
-			GeneticSpanner::mutation(mutation_probability, dad.second);
+			mom.first->buildSpanner(mom.second);
+			dad.first->buildSpanner(dad.second);
+        }		
 			fitnesses = this->computeFitnesses(population);
 			for (multimap<Spanner*, string>::iterator parent_it = parent_strings.begin(); parent_it != parent_strings.end(); parent_it++) {
 				float max_spanner = 0;
@@ -74,12 +80,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 				}
 				*found = *(*parent_it).first;
 			}
-			mom.first->removeEdges();
-			dad.first->removeEdges();
-			
-			mom.first->buildSpanner(mom.second);
-			dad.first->buildSpanner(dad.second);
-        }
+
             cout << "population size " << population.size() << endl;
 			for (int i = 0; i < population.size(); i++) {
 				double dil = population[i]->getMaxDilation();
@@ -339,8 +340,8 @@ void initial_string_generator(double prob_for_1, string &s) {
 }
 
 
- bool GeneticSpanner::mutation(double probability, string &s) {
-
+void GeneticSpanner::mutation(double probability, string &s, int t) {
+     for (int j=0; j<t; j++) {
 	int r = rand() % 10000;
 	double r2=r/10000.0;
 
@@ -354,11 +355,8 @@ void initial_string_generator(double prob_for_1, string &s) {
 		else {
 			s[mutation_point] = '1';
 		}
-
-		return true;
-	}
-	return false;
-}
+    }}
+ }
 
 
 void GeneticSpanner::crossover(string &a, string &b) {
