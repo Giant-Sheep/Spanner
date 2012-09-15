@@ -28,6 +28,7 @@ public:
 	static void mutation(double probability, string &s, int t);
 	static void crossover(string &a, string &b);
     static void crossover2(string &a, string &b);
+	static void binaryCrossover(string &a, string &b, double probability);
 
 private:
 	vector<Spanner *> population;
