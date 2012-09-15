@@ -56,7 +56,6 @@
 		D3108897134F5F1D0021CA53 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
 		D310889913509CBE0021CA53 /* ThetaSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThetaSpanner.cpp; sourceTree = "<group>"; };
 		D310889A13509CC00021CA53 /* ThetaSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThetaSpanner.h; sourceTree = "<group>"; };
-		D360E7DC15FCE043008220BB /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = data.txt; path = "../../../Library/Developer/Xcode/DerivedData/Spanner-emhmrzwztndalmebkonuyegfhbpa/Build/Products/Debug/data.txt"; sourceTree = "<group>"; };
 		D360E7DD15FCE87D008220BB /* GeneticSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeneticSpanner.cpp; sourceTree = "<group>"; };
 		D360E7DE15FCE87D008220BB /* GeneticSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneticSpanner.h; sourceTree = "<group>"; };
 		D360E7E0160108C2008220BB /* RandomSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RandomSpanner.cpp; sourceTree = "<group>"; };
@@ -83,7 +82,6 @@
 				D310888F134F55E80021CA53 /* GLUT.framework */,
 				D31088531349B7E10021CA53 /* Spanner */,
 				D31088511349B7E10021CA53 /* Products */,
-				D360E7DC15FCE043008220BB /* data.txt */,
 			);
 			sourceTree = "<group>";
 		};

@@ -104,19 +104,25 @@ static void GenerateData(unsigned int NrOfPoints, int a, int b, int maxX, int ma
 static void ReadData() {
 	int n,a,b,x,y;
 	std::ifstream in("data.txt");
-    
+    cout << "Reading data" << endl;
 	if(in){
 		in >> n;
 		std::cout << "Number of points is " << n << ".\n";
 		in >> a;
+        cout << "a " << a << endl;
 		in >> b;
+        cout << "b " << b << endl;
 		t=(double)a/(double)b;
 		std::cout << "Maximum dilation is " << t << ".\n";
 		for (int i = 0; i<n; i++) {
+            cout << "i " << i;
 			in >> x;
+            x = 800 -x ;
+            cout << " x " << x ; // TODO why x and y are not correct??
 			if (x*1.1>xmax) {xmax=x*1.1;}
 			in >> y;
-            y = 600 - y; //TODO flipping y coordinates for the supermarket data
+            cout << " y " << y << endl;
+            y =  y; //TODO flipping y coordinates for the supermarket data
 			if (y*1.1>ymax) {ymax=y*1.1;}
 
             bool ok=true;
@@ -168,7 +174,7 @@ void resetSpanner() {
             spanner = new WSPDSpanner(points, t, xmax, ymax);
             break;
 		case 4:
-			spanner = new GeneticSpanner(points, t, 47, 30, xmax, ymax);
+			spanner = new GeneticSpanner(points, t, 100, 30, xmax, ymax);
         default:
             break;
     }
@@ -377,7 +383,7 @@ int main (int argc, char** argv)
         b = 10;
         mx = 640;
         my = 480;
-        GenerateData(n, a, b, mx, my);
+//        GenerateData(n, a, b, mx, my);
     }
     
     if(argc > 1 && atoi(argv[1]) == 1) {
@@ -386,7 +392,7 @@ int main (int argc, char** argv)
         b = atoi(argv[4]);
         mx = atoi(argv[5]);
         my = atoi(argv[6]);
-        GenerateData(n, a, b, mx, my);
+//        GenerateData(n, a, b, mx, my);
     }
   
 //	std::cout << "Read file (0) or generate random (1): ";
