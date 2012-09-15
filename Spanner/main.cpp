@@ -383,7 +383,7 @@ int main (int argc, char** argv)
         b = 10;
         mx = 640;
         my = 480;
-//        GenerateData(n, a, b, mx, my);
+        GenerateData(n, a, b, mx, my);
     }
     
     if(argc > 1 && atoi(argv[1]) == 1) {
@@ -392,7 +392,7 @@ int main (int argc, char** argv)
         b = atoi(argv[4]);
         mx = atoi(argv[5]);
         my = atoi(argv[6]);
-//        GenerateData(n, a, b, mx, my);
+        GenerateData(n, a, b, mx, my);
     }
   
 //	std::cout << "Read file (0) or generate random (1): ";

@@ -58,7 +58,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			mom = pair<Spanner *, string>((*it).first, (*it).second);
 			it++;
 			dad = pair<Spanner *, string>((*it).first, (*it).second);
-			GeneticSpanner::crossover(mom.second, dad.second);
+			//GeneticSpanner::crossover(mom.second, dad.second);
+			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.5);
 			
 			if(iter_limit == 0) {
 				mutation_probability = 0.05;
@@ -208,7 +209,7 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
         double gmd = (*it)->getMaxDilation();
 
 		if(!feasible) {
-            gmd = gmd *3;
+            gmd = gmd * gmd *3;
 			//fitness += offset;
 /*			if(max_dil != INT_MAX) {
 				float dist_from_t = (max_dil - this->t);
@@ -368,6 +369,27 @@ void GeneticSpanner::mutation(double probability, string &s, int t) {
 		}
     }}
  }
+
+void GeneticSpanner::binaryCrossover(string &a, string &b, double probability) {
+	string a2 = "";
+	string b2 = "";
+	
+	double r = (double)rand() / (double)INT_MAX;
+	
+	for (int i = 0; i < a.length(); i++) {
+		if(r < probability) {
+			a2.append(b, i, 1);
+			b2.append(a, i, 1);
+		}
+		else {
+			a2.append(a, i, 1);
+			b2.append(b, i, i);
+		}
+	}
+	
+	a = a2;
+	b = b2;
+}
 
 
 void GeneticSpanner::crossover(string &a, string &b) {
