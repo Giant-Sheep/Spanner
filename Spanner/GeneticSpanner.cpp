@@ -20,7 +20,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
 	int mutation_probability = 0.5;
-	int mutations = 300;
+	int mutations = 500;
     
 	for(int i = 0; i < generation_size; i++) {
 		population_points.push_back(vector<Point *>());
@@ -29,7 +29,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.65));
+		population.push_back(new RandomSpanner(population_points.back(), t, ((i+0.1)*1.0)/(generation_size+0.2)));
 
 	}
 	
@@ -58,7 +58,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			mom = pair<Spanner *, string>((*it).first, (*it).second);
 			it++;
 			dad = pair<Spanner *, string>((*it).first, (*it).second);
-			GeneticSpanner::crossover(mom.second, dad.second);
+//			GeneticSpanner::crossover(mom.second, dad.second);
+			GeneticSpanner::crossover2(mom.second, dad.second);
 			
 			if(iter_limit == 0) {
 				mutation_probability = 0.05;
@@ -71,6 +72,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			mom.first->buildSpanner(mom.second);
 			dad.first->buildSpanner(dad.second);
         }
+        
+        //tää aiheittaa mulla sen että tietty spanneri dominoi nopeasti koko populaation
 /*			fitnesses = this->computeFitnesses(population);
 			for (multimap<Spanner*, string>::iterator parent_it = parent_strings.begin(); parent_it != parent_strings.end(); parent_it++) {
 				float max_spanner = 0;
@@ -85,10 +88,13 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
             } */
         
         cout << "population size " << population.size() << endl;
+        
+        //etsitään populaation suurimman ja pienimmän dilationin omaava alkio
         double sum_dil = 0;
         double max_dil = 0;
         int min_dil_ind = 0;
         int max_dil_ind = 0;
+        
         for (int i = 0; i < population.size(); i++) {
             double dil = population[i]->getMaxDilation();
             sum_dil += dil;
@@ -102,7 +108,9 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
                 max_dil_ind = i;
             }
         }
-        if (iter_limit%2==1) {
+        
+        // replace max dilation spanner
+        if (iter_limit>498) {
             population[max_dil_ind] = population[min_dil_ind];
         }
         else {
@@ -152,7 +160,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
     }*/
 
     
-    // TODO min fitness ? min spanner ?
+    // TODO kumpi ois paarempi: min_fitness vai  min_dilation spanner ?
     min_spanner = min_dil_index;
     
     if (min_fitness < INT_MAX) {
@@ -208,7 +216,8 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
         double gmd = (*it)->getMaxDilation();
 
 		if(!feasible) {
-            gmd = gmd *3;
+            gmd = gmd *5; //TODO another magic number...
+            
 			//fitness += offset;
 /*			if(max_dil != INT_MAX) {
 				float dist_from_t = (max_dil - this->t);
@@ -379,6 +388,28 @@ void GeneticSpanner::crossover(string &a, string &b) {
 	string b2 (b, 0, crossover_point);
 	b2.append(a, crossover_point, a.length()-crossover_point);
 
+	a=a2;
+	b=b2;
+}
+
+
+void GeneticSpanner::crossover2(string &a, string &b) {
+    
+	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
+    int crossover_point2 = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
+    if (crossover_point>crossover_point2) {
+        int temp = crossover_point;
+        crossover_point = crossover_point2;
+        crossover_point2 = temp;
+    }
+	string a2 (a, 0, crossover_point);
+	a2.append(b, crossover_point, crossover_point2);
+    a2.append(a, crossover_point2, a.length()-crossover_point2);
+    
+	string b2 (b, 0, crossover_point);
+	b2.append(a, crossover_point, crossover_point2);
+    b2.append(b, crossover_point2, b.length()-crossover_point2);
+    
 	a=a2;
 	b=b2;
 }

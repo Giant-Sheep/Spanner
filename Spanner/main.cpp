@@ -174,7 +174,7 @@ void resetSpanner() {
             spanner = new WSPDSpanner(points, t, xmax, ymax);
             break;
 		case 4:
-			spanner = new GeneticSpanner(points, t, 100, 30, xmax, ymax);
+			spanner = new GeneticSpanner(points, t, 10, 6, xmax, ymax);
         default:
             break;
     }
@@ -383,6 +383,7 @@ int main (int argc, char** argv)
         b = 10;
         mx = 640;
         my = 480;
+// kommentoitu pois, jotta sain pakotettua supermarket datan sisään        
 //        GenerateData(n, a, b, mx, my);
     }
     
