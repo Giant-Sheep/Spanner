@@ -19,7 +19,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	multimap<Spanner *, string> parent_strings;
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
-	int mutation_probability = 0.5;
+	double mutation_probability = 0.1;
 	int mutations = 300;
     
 	for(int i = 0; i < generation_size; i++) {
@@ -29,29 +29,30 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.65));
-
+		population.push_back(new RandomSpanner(population_points.back(), t, 0.4));
+		
 	}
 	
 	// Test GA
-//	for (int i = 0; i < 10; i++) {
+	//	for (int i = 0; i < 10; i++) {
     double min_dil = INT_MAX;
     int iter_limit = 500;
-
-    while (min_dil > t) {
+	int min_iterations = 25;
+	
+    while (min_iterations != 0 || min_dil > t) {
         
         if (iter_limit < 0) { break;}
- //   while (iter_limit > 0) {
-
+		//   while (iter_limit > 0) {
+		
 		fitnesses = computeFitnesses(population);
 		sum = sumOfFitnesses(fitnesses);
         
-//        cout << "sum " << sum << endl;
+		//        cout << "sum " << sum << endl;
         
 		mating_pool = generateMatingPool(fitnesses, sum, mating_pool_size);
 		parents = pairParents(mating_pool);
 		parent_strings = generateStringRepresentation(parents);
-
+		
 		pair<Spanner*, string> mom;
 		pair<Spanner*, string> dad;
 		for (multimap<Spanner *, string>::iterator it = parent_strings.begin(); it != parent_strings.end(); it++) {
@@ -61,115 +62,147 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			//GeneticSpanner::crossover(mom.second, dad.second);
 			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.5);
 			
-			if(iter_limit == 0) {
-				mutation_probability = 0.05;
+			if(iter_limit == iter_limit - 20) {
+				mutation_probability = 0.01;
 			}
-            mom.first->removeEdges();
-			dad.first->removeEdges();
+			//            mom.first->removeEdges();
+			//			dad.first->removeEdges();
 			GeneticSpanner::mutation(mutation_probability, mom.second, mutations);
 			GeneticSpanner::mutation(mutation_probability, dad.second, mutations);
 			
-			mom.first->buildSpanner(mom.second);
-			dad.first->buildSpanner(dad.second);
-        }
-/*			fitnesses = this->computeFitnesses(population);
-			for (multimap<Spanner*, string>::iterator parent_it = parent_strings.begin(); parent_it != parent_strings.end(); parent_it++) {
-				float max_spanner = 0;
-				Spanner *found;
-				for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
-					if((*fit_it).second > max_spanner) {
-						max_spanner = (*fit_it).second;
-						found = (*fit_it).first;
-					}
-                }
-			*found = *(*parent_it).first;
-            } */
-        
-        cout << "population size " << population.size() << endl;
-        double sum_dil = 0;
-        double max_dil = 0;
-        int min_dil_ind = 0;
-        int max_dil_ind = 0;
-        for (int i = 0; i < population.size(); i++) {
-            double dil = population[i]->getMaxDilation();
-            sum_dil += dil;
-            cout << " " << dil;
-            if(dil < min_dil && min_dil > 1) {
-                min_dil = dil;
-                min_dil_ind = i;
-            }            
-            if (dil> max_dil) {
-                max_dil = dil;
-                max_dil_ind = i;
-            }
-        }
-        if (iter_limit%2==1) {
-            population[max_dil_ind] = population[min_dil_ind];
-        }
-        else {
-            population[max_dil_ind] = population[rand()%population.size()];
-        }
-        cout << " " << endl;
+			fitnesses = computeFitnesses(population);
+			
+			int ind = rand() % population.size();
+			population[ind]->removeEdges();
+			population[ind]->buildSpanner(mom.second);
+			
+			ind = rand() % population.size();
+			population[ind]->removeEdges();
+			population[ind]->buildSpanner(dad.second);
+			
+			
+//			for (int j = 0; j < 2; j++) {
+//				int i = 0;
+//				int max_fit_ind = 0;
+//				double max_fit = 0.0;
+//				computeFitnesses(population);
+//				for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
+//					if ((*fit_it).second > max_fit) {
+//						max_fit = (*fit_it).second;
+//						max_fit_ind = i;
+//					}
+//					i++;
+//				}
+//				cout << "max fit: " << max_fit_ind << endl;
+//				if(j == 0) {
+//					population[max_fit_ind]->removeEdges();
+//					population[max_fit_ind]->buildSpanner(mom.second);
+//				}
+//				else {
+//					population[max_fit_ind]->removeEdges();
+//					population[max_fit_ind]->buildSpanner(dad.second);
+//				}
+//			}
+		}
 		
-        cout << "iter_limit: " << iter_limit << "min_dil " << min_dil <<  " loop " << ((min_dil > t || iter_limit > 0)) << " avg_dil " << (sum_dil/population.size()) << endl;
-
-        iter_limit--;
+		//			mom.first->buildSpanner(mom.second);
+		//			dad.first->buildSpanner(dad.second);
+		/*			fitnesses = this->computeFitnesses(population);
+		 for (multimap<Spanner*, string>::iterator parent_it = parent_strings.begin(); parent_it != parent_strings.end(); parent_it++) {
+		 float max_spanner = 0;
+		 Spanner *found;
+		 for (map<Spanner *, float>::iterator fit_it = fitnesses.begin(); fit_it != fitnesses.end(); fit_it++) {
+		 if((*fit_it).second > max_spanner) {
+		 max_spanner = (*fit_it).second;
+		 found = (*fit_it).first;
+		 }
+		 }
+		 *found = *(*parent_it).first;
+		 } */
+		
+		cout << "population size " << population.size() << endl;
+		
+		double sum_dil = 0;
+		for (int i = 0; i < population.size(); i++) {
+			double dil = population[i]->getMaxDilation();
+			sum_dil += dil;
+			if(dil < min_dil && min_dil > 1) {
+				min_dil = dil;
+			}
+			
+			cout << " " << dil;
+		}
+		cout << endl;
+		/*if (iter_limit%2==1) {
+		 *population[max_dil_ind] = *population[min_dil_ind];
+		 }
+		 else {
+		 *population[max_dil_ind] = *population[rand()%population.size()];
+		 }*/
+		cout << " " << endl;
+		
+		cout << "iter_limit: " << iter_limit << "min_dil " << min_dil <<  " loop " << ((min_dil > t || iter_limit > 0)) << " avg_dil " << (sum_dil/population.size()) << endl;
+		
+		iter_limit--;
+		if(min_iterations != 0) {
+			min_iterations--;
+		}
 	}
 	cout << "Final Dilation: " << min_dil << endl;
-
-    
+	
+	
 	double min = INT_MAX;
-    int min_dil_index = 0;
-    int ii = 0;
+	int min_dil_index = 0;
+	int ii = 0;
 	for (vector<Spanner *>::iterator it = population.begin(); it != population.end(); it++) {
 		double dil = (*it)->getMaxDilation();
 		if(dil < min) {
-            min_dil_index = ii;
+			min_dil_index = ii;
 			min = dil;
 		}
-        ii++;
+		ii++;
 	}
 	cout << "Final Dilation: " << min << endl;
-    
-    
-    float min_fitness = INT_MAX;
-    //Spanner *min_spanner = NULL;
+	
+	
+	float min_fitness = INT_MAX;
+	//Spanner *min_spanner = NULL;
 	int min_spanner = 0;
 	int index = 0;
 	
 	for (map<Spanner *, float>::iterator iter = fitnesses.begin(); iter != fitnesses.end(); iter++) {
-        if ((*iter).second < min_fitness && (*iter).first->getMaxDilation() < t) {
-            min_fitness = (*iter).second;
+		if ((*iter).second < min_fitness && (*iter).first->getMaxDilation() < t) {
+			min_fitness = (*iter).second;
 			min_spanner = index;
-        }
+		}
 		index++;
-    }
-    //cout << "max dilation " << min_spanner->getMaxDilation() << endl;
-    cout << "Min fitness: " << min_fitness << endl;
-//    cout << "Spanner edges : " << min_spanner->getEdges().size() << endl;
-    
-    /*for(unsigned int x = 0; x < min_spanner->getEdges().size(); x++) {
-        min_spanner->getEdges().at(x)->draw();
-    }*/
-
-    
-    // TODO min fitness ? min spanner ?
-    min_spanner = min_dil_index;
-    
-    if (min_fitness < INT_MAX) {
+	}
+	//cout << "max dilation " << min_spanner->getMaxDilation() << endl;
+	cout << "Min fitness: " << min_fitness << endl;
+	//    cout << "Spanner edges : " << min_spanner->getEdges().size() << endl;
+	
+	/*for(unsigned int x = 0; x < min_spanner->getEdges().size(); x++) {
+	 min_spanner->getEdges().at(x)->draw();
+	 }*/
+	
+	
+	// TODO min fitness ? min spanner ?
+	min_spanner = min_dil_index;
+	
+	if (min_fitness < INT_MAX) {
 		vector<pair<Spanner *, Spanner *> > spannerpair = vector<pair<Spanner *, Spanner *> >();
 		spannerpair.push_back(pair<Spanner *, Spanner *>(population[min_spanner], population[min_spanner]));
 		multimap<Spanner *, string> tempmap = this->generateStringRepresentation(spannerpair);
 		cout << tempmap.find(population[min_spanner])->second << endl;
-        this->buildSpanner(tempmap.find(population[min_spanner])->second);
+		this->buildSpanner(tempmap.find(population[min_spanner])->second);
 		cout << "Dilation of found spanner: " << population[min_spanner]->getMaxDilation() << endl;
-    }
+	}
 }
 
 map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanners) {
 	map<Spanner *, float> fitnesses = map<Spanner *, float>();
     float offset = 0.f;
-
+	
 	for(vector<Spanner *>::iterator it = spanners.begin(); it != spanners.end(); it++) {
 		float fitness = 0.f;
         
@@ -183,18 +216,18 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 			for (vector<Point *>::iterator second_point = first_point + 1; second_point != spanner_points.end(); second_point++) {
 				float dilation = (*it)->getDilation((*first_point), (*second_point));
                 
-/*				if(dilation > max_dil) {
-					max_dil = dilation;
-				}*/
-//				cout << "dilation: " << dilation << endl;
+				/*				if(dilation > max_dil) {
+				 max_dil = dilation;
+				 }*/
+				//				cout << "dilation: " << dilation << endl;
 				
 				/*if(dilation < INT_MAX) {
-					offset += dilation;
-				}*/
+				 offset += dilation;
+				 }*/
 				
 				//offset = (*it)->getEdges().size();
 				if(dilation == INT_MAX) {
-//					fitness += offset*1000; //TODO magic number
+					//					fitness += offset*1000; //TODO magic number
 					feasible = false;
 				}
                 else if (dilation > t) {
@@ -207,21 +240,22 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 			}
 		}
         double gmd = (*it)->getMaxDilation();
-
+		double edge_penalty = (*it)->getWeight() / (double)282935 * 8.0;
 		if(!feasible) {
-            gmd = gmd * gmd *3;
+			if(gmd != INT_MAX) {
+				gmd = gmd * gmd * gmd;
+			}
 			//fitness += offset;
-/*			if(max_dil != INT_MAX) {
-				float dist_from_t = (max_dil - this->t);
-				
-				fitness += dist_from_t *dist_from_t *dist_from_t * dist_from_t * offset;
-			}*/
+			/*			if(max_dil != INT_MAX) {
+			 float dist_from_t = (max_dil - this->t);
+			 
+			 fitness += dist_from_t *dist_from_t *dist_from_t * dist_from_t * offset;
+			 }*/
 		}
         
 		//fitness += (*it)->getEdges().size();
-//		cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << gmd << " Feasible: " << feasible << endl;
-
-		fitnesses[(*it)] = gmd; //fitness;		
+		//		cout << "Fitness: " << fitness << " Offset: " << offset << " Dilation: " << gmd << " Feasible: " << feasible << endl;
+		fitnesses[(*it)] = gmd + edge_penalty; //fitness;
         
 	}
 	
@@ -341,7 +375,7 @@ void initial_string_generator(double prob_for_1, string &s) {
 	for (int i=0; i<s.length(); i++) {
 		int r = rand() % 10000;
 		double r2=r/10000.0;
-
+		
 		if (r2 < prob_for_1) {
 			s[i] = '1';
 		}
@@ -353,22 +387,22 @@ void initial_string_generator(double prob_for_1, string &s) {
 
 
 void GeneticSpanner::mutation(double probability, string &s, int t) {
-     for (int j=0; j<t; j++) {
-	int r = rand() % 10000;
-	double r2=r/10000.0;
-
-	if (r2 < probability) {
-
-		int mutation_point = (int)(rand() % s.length());
-
-		if (s[mutation_point] == '1') {
-			s[mutation_point] = '0';
-		}
-		else {
-			s[mutation_point] = '1';
-		}
-    }}
- }
+	for (int j=0; j<t; j++) {
+		int r = rand() % 10000;
+		double r2=r/10000.0;
+		
+		if (r2 < probability) {
+			
+			int mutation_point = (int)(rand() % s.length());
+			
+			if (s[mutation_point] == '1') {
+				s[mutation_point] = '0';
+			}
+			else {
+				s[mutation_point] = '1';
+			}
+		}}
+}
 
 void GeneticSpanner::binaryCrossover(string &a, string &b, double probability) {
 	string a2 = "";
@@ -393,14 +427,15 @@ void GeneticSpanner::binaryCrossover(string &a, string &b, double probability) {
 
 
 void GeneticSpanner::crossover(string &a, string &b) {
-
+	
 	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
-
+	
 	string a2 (a, 0, crossover_point);
 	a2.append(b, crossover_point, b.length()-crossover_point);
 	string b2 (b, 0, crossover_point);
 	b2.append(a, crossover_point, a.length()-crossover_point);
-
+	
 	a=a2;
 	b=b2;
 }
+

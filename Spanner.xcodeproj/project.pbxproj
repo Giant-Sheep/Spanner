@@ -60,6 +60,7 @@
 		D360E7DE15FCE87D008220BB /* GeneticSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneticSpanner.h; sourceTree = "<group>"; };
 		D360E7E0160108C2008220BB /* RandomSpanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RandomSpanner.cpp; sourceTree = "<group>"; };
 		D360E7E1160108C2008220BB /* RandomSpanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomSpanner.h; sourceTree = "<group>"; };
+		D3FDB2CD1604AA6900461BCA /* data.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = data.txt; path = "../../../Library/Developer/Xcode/DerivedData/Spanner-emhmrzwztndalmebkonuyegfhbpa/Build/Products/Debug/data.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +83,7 @@
 				D310888F134F55E80021CA53 /* GLUT.framework */,
 				D31088531349B7E10021CA53 /* Spanner */,
 				D31088511349B7E10021CA53 /* Products */,
+				D3FDB2CD1604AA6900461BCA /* data.txt */,
 			);
 			sourceTree = "<group>";
 		};
