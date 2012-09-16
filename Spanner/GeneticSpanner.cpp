@@ -60,8 +60,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			it++;
 			dad = pair<Spanner *, string>((*it).first, (*it).second);
             //			GeneticSpanner::crossover(mom.second, dad.second);
-			GeneticSpanner::crossover2(mom.second, dad.second);
-//			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.5);
+			//GeneticSpanner::crossover2(mom.second, dad.second);
+			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.25);
 			
 			if(iter_limit == iter_limit - 20) {
 				mutation_probability = 0.01;
@@ -124,6 +124,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		cout << "population size " << population.size() << endl;
 		
 		double sum_dil = 0;
+		min_dil = 0.0;
 		for (int i = 0; i < population.size(); i++) {
 			double dil = population[i]->getMaxDilation();
 			sum_dil += dil;
@@ -241,7 +242,7 @@ map<Spanner *, float> GeneticSpanner::computeFitnesses(vector<Spanner *> spanner
 			}
 		}
         double gmd = (*it)->getMaxDilation();
-		double edge_penalty = (*it)->getWeight() / (double)282935 * 8.0;
+		double edge_penalty = (*it)->getWeight() / (double)282935 * 12.0;
 		if(!feasible) {
 			if(gmd != INT_MAX) {
 				gmd = gmd * gmd * gmd;
