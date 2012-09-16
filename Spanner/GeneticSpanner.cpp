@@ -37,7 +37,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	//	for (int i = 0; i < 10; i++) {
     double min_dil = INT_MAX;
     int iter_limit = 500;
-	int min_iterations = 25;
+	int min_iterations = 30;
 	
     while (min_iterations != 0 || min_dil > t) {
         
@@ -64,7 +64,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.25);
 			
 			if(iter_limit == iter_limit - 20) {
-				mutation_probability = 0.01;
+				mutation_probability = 0.1;
 			}
 			//            mom.first->removeEdges();
 			//			dad.first->removeEdges();
@@ -124,7 +124,7 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		cout << "population size " << population.size() << endl;
 		
 		double sum_dil = 0;
-		min_dil = 0.0;
+		min_dil = INT_MAX;
 		for (int i = 0; i < population.size(); i++) {
 			double dil = population[i]->getMaxDilation();
 			sum_dil += dil;
