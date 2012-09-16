@@ -19,8 +19,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 	multimap<Spanner *, string> parent_strings;
 	float sum = 0.f;
 	mating_pool = vector<Spanner *>();
-	double mutation_probability = 0.1;
-	int mutations = 300;
+	double mutation_probability = 0.5;
+	int mutations = 500;
     
 	for(int i = 0; i < generation_size; i++) {
 		population_points.push_back(vector<Point *>());
@@ -29,8 +29,8 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 		}
 		
 		//TODO: Magic probability
-		population.push_back(new RandomSpanner(population_points.back(), t, 0.4));
-		
+		population.push_back(new RandomSpanner(population_points.back(), t, ((i+0.1)*1.0)/(generation_size+0.2)));
+
 	}
 	
 	// Test GA
@@ -177,20 +177,20 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			min_spanner = index;
 		}
 		index++;
-	}
-	//cout << "max dilation " << min_spanner->getMaxDilation() << endl;
-	cout << "Min fitness: " << min_fitness << endl;
-	//    cout << "Spanner edges : " << min_spanner->getEdges().size() << endl;
-	
-	/*for(unsigned int x = 0; x < min_spanner->getEdges().size(); x++) {
-	 min_spanner->getEdges().at(x)->draw();
-	 }*/
-	
-	
-	// TODO min fitness ? min spanner ?
-	min_spanner = min_dil_index;
-	
-	if (min_fitness < INT_MAX) {
+    }
+    //cout << "max dilation " << min_spanner->getMaxDilation() << endl;
+    cout << "Min fitness: " << min_fitness << endl;
+//    cout << "Spanner edges : " << min_spanner->getEdges().size() << endl;
+    
+    /*for(unsigned int x = 0; x < min_spanner->getEdges().size(); x++) {
+        min_spanner->getEdges().at(x)->draw();
+    }*/
+
+    
+    // TODO kumpi ois paarempi: min_fitness vai  min_dilation spanner ?
+    min_spanner = min_dil_index;
+    
+    if (min_fitness < INT_MAX) {
 		vector<pair<Spanner *, Spanner *> > spannerpair = vector<pair<Spanner *, Spanner *> >();
 		spannerpair.push_back(pair<Spanner *, Spanner *>(population[min_spanner], population[min_spanner]));
 		multimap<Spanner *, string> tempmap = this->generateStringRepresentation(spannerpair);
@@ -440,3 +440,24 @@ void GeneticSpanner::crossover(string &a, string &b) {
 	b=b2;
 }
 
+
+void GeneticSpanner::crossover2(string &a, string &b) {
+    
+	int crossover_point = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
+    int crossover_point2 = (int)(rand() % (a.length()-1)) + 1; // crossover at 0 would change strings completly, so force it to min 1.
+    if (crossover_point>crossover_point2) {
+        int temp = crossover_point;
+        crossover_point = crossover_point2;
+        crossover_point2 = temp;
+    }
+	string a2 (a, 0, crossover_point);
+	a2.append(b, crossover_point, crossover_point2);
+    a2.append(a, crossover_point2, a.length()-crossover_point2);
+    
+	string b2 (b, 0, crossover_point);
+	b2.append(a, crossover_point, crossover_point2);
+    b2.append(b, crossover_point2, b.length()-crossover_point2);
+    
+	a=a2;
+	b=b2;
+}
