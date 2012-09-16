@@ -59,8 +59,9 @@ GeneticSpanner::GeneticSpanner(vector<Point *> points, double t, size_t generati
 			mom = pair<Spanner *, string>((*it).first, (*it).second);
 			it++;
 			dad = pair<Spanner *, string>((*it).first, (*it).second);
-			//GeneticSpanner::crossover(mom.second, dad.second);
-			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.5);
+            //			GeneticSpanner::crossover(mom.second, dad.second);
+			GeneticSpanner::crossover2(mom.second, dad.second);
+//			GeneticSpanner::binaryCrossover(mom.second, dad.second, 0.5);
 			
 			if(iter_limit == iter_limit - 20) {
 				mutation_probability = 0.01;

@@ -383,7 +383,8 @@ int main (int argc, char** argv)
         b = 10;
         mx = 640;
         my = 480;
-        GenerateData(n, a, b, mx, my);
+// kommentoitu pois, jotta sain pakotettua supermarket datan sisään        
+//        GenerateData(n, a, b, mx, my);
     }
     
     if(argc > 1 && atoi(argv[1]) == 1) {
